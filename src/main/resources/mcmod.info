@@ -1,0 +1,17 @@
+[
+{
+  "modid": "primalarcane",
+  "name": "Primal Arcane",
+  "description":"An IC2EXP addon mod",
+  "version": "1.662",
+  "mcversion": "1.12.2",
+  "url": "http://lrsoft.azurewebsites.net/",
+  "updateUrl": "",
+  "authorList": [ "LT_lrsoft"],
+  "credits": "",
+  "logoFile": "assets/mets/textures/mets.png",
+  "screenshots": [],
+  "requiredMods": [],
+  "dependencies": []
+}
+]
