@@ -3,10 +3,12 @@ package net.lrsoft.primalarcane.item;
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.entity.EntityFireball;
 import net.lrsoft.primalarcane.entity.EntityShootSpell;
+import net.lrsoft.primalarcane.mana.ManaHelper;
 import net.lrsoft.primalarcane.spell.Spell;
 import net.lrsoft.primalarcane.spell.SpellManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,15 +36,14 @@ public class ItemWand extends Item {
 		if (worldIn.isRemote)
 			return;
 		
-		World world;
-		
-		Spell spell = getWandSpell(stack, slot);
-		
 		BlockPos pos = new BlockPos(player);
 		Chunk chunk = worldIn.getChunkFromBlockCoords(pos);
-		//chunk.
+		
+		Spell spell = getWandSpell(stack, slot);
 		if (spell != null) {
-			spell.onSpell(worldIn, player, stack);
+			if(ManaHelper.consumeMana(worldIn, chunk, spell.getConsumeManaType(), spell.getSpellCost())){
+				spell.onSpell(worldIn, player, stack);
+			}
 		}
 	}
 
