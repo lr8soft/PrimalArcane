@@ -15,12 +15,9 @@ public class FireballSpell implements Spell {
 
 	@Override
 	public void onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
-		if(!worldIn.isRemote)
-		{
-			EntityFireball entity = new EntityFireball(worldIn, playerIn, 6f, 250);
-			entity.shoot(playerIn.rotationYaw, playerIn.rotationPitch, 2.0f);
-			worldIn.spawnEntity(entity);
-		}
+		EntityFireball entity = new EntityFireball(worldIn, playerIn, 6f, 250);
+		entity.shoot(playerIn.rotationYaw, playerIn.rotationPitch, 2.0f);
+		worldIn.spawnEntity(entity);
 	}
 
 	@Override

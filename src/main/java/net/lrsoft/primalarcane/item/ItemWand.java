@@ -14,7 +14,9 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.chunk.Chunk;
 
 public class ItemWand extends Item {
 	public ItemWand(String wandName) {
@@ -29,10 +31,17 @@ public class ItemWand extends Item {
 	}
 
 	public void doWandSpell(World worldIn, EntityPlayer player, ItemStack stack, WandSlot slot) {
+		if (worldIn.isRemote)
+			return;
+		
+		World world;
+		
 		Spell spell = getWandSpell(stack, slot);
-		PrimalArcane.logger.info(spell == null);
-		if(spell != null) {
-			PrimalArcane.logger.info(spell.getSpellName());
+		
+		BlockPos pos = new BlockPos(player);
+		Chunk chunk = worldIn.getChunkFromBlockCoords(pos);
+		//chunk.
+		if (spell != null) {
 			spell.onSpell(worldIn, player, stack);
 		}
 	}
@@ -80,6 +89,13 @@ public class ItemWand extends Item {
 			return SpellManager.getSpell(spellName);
 		} catch (Exception expt) {
 			return SpellManager.fireball;
+		}
+	}
+	
+	public void setWandSpell(ItemStack stack, WandSlot slot, Spell spell) {
+		try {
+			stack.getItem().getNBTShareTag(stack).setString("WandSlot" + slot.toString(), spell.getSpellName());
+		} catch (Exception expt) {
 		}
 	}
 

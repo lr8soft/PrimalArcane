@@ -3,6 +3,7 @@ package net.lrsoft.primalarcane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import net.lrsoft.primalarcane.gui.RenderGuiHandler;
 import net.lrsoft.primalarcane.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
@@ -48,7 +49,7 @@ public class PrimalArcane {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
-
+		MinecraftForge.EVENT_BUS.register(new RenderGuiHandler());
 	}
 
 }
