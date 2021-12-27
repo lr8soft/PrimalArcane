@@ -18,21 +18,23 @@ public class ManaHelper {
 			data = manager.initChunkManaData(chunk);
 		
 		// calc as second
-		long nowTime = System.currentTimeMillis();
-		float deltaTime = (System.currentTimeMillis() - data.lastUpdateTime) / 1000.0f;
+		long nowTime = manager.getWorld().getTotalWorldTime();
+		// 1s = 20tick
+		float deltaTime = (nowTime - data.lastUpdateTime) / 20.0f;
 		
 		float maxPositiveMana = data.maxMana * data.positiveNegativeRatio;
-		float maxNegativeMana = data.maxMana - data.positiveMana;
+		float maxNegativeMana = data.maxMana - maxPositiveMana;
 		
 		float currentMaxMana = data.negativeMana + data.positiveMana;
 		
 		float updateValue = deltaTime * data.recoverySpeed;
 		
-		
+		PrimalArcane.logger.info("before recovery:" + updateValue + " +:" + data.positiveMana + "-:" + data.negativeMana);
 		
 		boolean result = false;
 		// consume none mana
 		if(data.maxMana - currentMaxMana > 1e-2) {
+			PrimalArcane.logger.info("void mana");
 			float delta = data.maxMana - currentMaxMana;
 			if(delta >= updateValue) {
 				float newMax = currentMaxMana + updateValue;
@@ -59,11 +61,11 @@ public class ManaHelper {
 			if(delta != 0.0f) {
 				if(delta >= updateValue) {
 					if(addPositive) {
-						data.positiveMana += delta;
-						data.negativeMana -= delta;
+						data.positiveMana += updateValue;
+						data.negativeMana -= updateValue;
 					}else {
-						data.positiveMana -= delta;
-						data.negativeMana += delta;
+						data.positiveMana -= updateValue;
+						data.negativeMana += updateValue;
 					}
 				}else {
 					data.positiveMana = maxPositiveMana;
@@ -75,13 +77,13 @@ public class ManaHelper {
 		
 		if(result) {
 			data.lastUpdateTime = nowTime;
-			PrimalArcane.logger.info("recovery:" + updateValue + " +:" + data.positiveMana + "-:" + data.negativeMana);
+			PrimalArcane.logger.info("after recovery:" + updateValue + " +:" + data.positiveMana + "-:" + data.negativeMana);
 			manager.setChunkManaData(data, chunk.getPos());
 		}
 	}
 
 	public static boolean consumeMana(World world, Chunk chunk, ManaType type, float cost) {
-		//updateMana(world, chunk);
+		updateMana(world, chunk);
 		boolean result = false;
 		ManaDataManager manager = ManaDataManager.getManager(world);
 		ChunkManaData data = manager.getChunkManaData(chunk.getPos());

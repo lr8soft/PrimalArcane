@@ -29,7 +29,7 @@ public class ManaDataManager extends WorldSavedData {
 	
 	private HashMap<ChunkPos, ChunkManaData> chunkData = new HashMap<>();
 	
-	private MapStorage storage;
+	private World world;
 
 	public static ManaDataManager getManager(World world) {
 		MapStorage storage = world.getMapStorage();
@@ -39,7 +39,7 @@ public class ManaDataManager extends WorldSavedData {
 			manager = new ManaDataManager();
 			storage.setData(DATA_NAME, manager);
 		}
-		manager.setStorage(storage);
+		manager.setWorld(world);
 		return manager;
 	}
 
@@ -79,7 +79,7 @@ public class ManaDataManager extends WorldSavedData {
 		
 		data.positiveMana = data.positiveNegativeRatio * data.maxMana;
 		data.negativeMana = data.maxMana - data.positiveMana;
-		data.lastUpdateTime = System.currentTimeMillis();
+		data.lastUpdateTime = world.getTotalWorldTime();
 		
 		this.setChunkManaData(data, chunk.getPos());
 		return data;
@@ -109,8 +109,12 @@ public class ManaDataManager extends WorldSavedData {
 		return compound;
 	}
 	
-	private void setStorage(MapStorage storage) {
-		this.storage = storage;
+	private void setWorld(World world) {
+		this.world = world;
+	}
+	
+	public World getWorld() {
+		return this.world;
 	}
 
 	public class ChunkManaData implements Serializable {
