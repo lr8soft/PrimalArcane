@@ -74,7 +74,7 @@ public class ManaDataManager extends WorldSavedData {
 			recoveryRate += BiomeMana.getBiomeManaRecoverySpeed(biome);
 		}
 		data.positiveNegativeRatio = totalRate / biomeCount;
-		data.recoverySpeed = 5.0f * (recoveryRate / biomeCount);
+		data.recoverySpeed = 7.0f * (recoveryRate / biomeCount);
 		data.maxMana = (float) MathUtils.getRandomFromRange(1000d, 200d);
 		
 		data.positiveMana = data.positiveNegativeRatio * data.maxMana;
@@ -91,7 +91,6 @@ public class ManaDataManager extends WorldSavedData {
 		if (info == null || info.length() == 0)
 			return;
 
-		PrimalArcane.logger.info("ManaData try read from NBT" + info);
 		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
 		chunkData.clear();
 		chunkData.putAll(gson.fromJson(info, new TypeToken<HashMap<ChunkPos, ChunkManaData>>() {}.getType()));//HashMap.class));
@@ -104,7 +103,6 @@ public class ManaDataManager extends WorldSavedData {
 		Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
 		String data = gson.toJson(chunkData);
 
-		//PrimalArcane.logger.info("ManaData write to NBT " + data);
 		compound.setString("ChunkManaData", data);
 		return compound;
 	}
@@ -117,7 +115,7 @@ public class ManaDataManager extends WorldSavedData {
 		return this.world;
 	}
 
-	public class ChunkManaData implements Serializable {
+	public static class ChunkManaData implements Serializable {
 		public float positiveMana;
 		public float negativeMana;
 		public float maxMana;

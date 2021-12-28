@@ -2,6 +2,10 @@ package net.lrsoft.primalarcane.mana;
 
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.mana.ManaDataManager.ChunkManaData;
+import net.lrsoft.primalarcane.network.MessageMana;
+import net.lrsoft.primalarcane.network.NetworkHandler;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
@@ -28,8 +32,6 @@ public class ManaHelper {
 		float currentMaxMana = data.negativeMana + data.positiveMana;
 		
 		float updateValue = deltaTime * data.recoverySpeed;
-		
-		PrimalArcane.logger.info("before recovery:" + updateValue + " +:" + data.positiveMana + "-:" + data.negativeMana);
 		
 		boolean result = false;
 		// consume none mana
@@ -77,7 +79,6 @@ public class ManaHelper {
 		
 		if(result) {
 			data.lastUpdateTime = nowTime;
-			PrimalArcane.logger.info("after recovery:" + updateValue + " +:" + data.positiveMana + "-:" + data.negativeMana);
 			manager.setChunkManaData(data, chunk.getPos());
 		}
 	}
@@ -89,9 +90,6 @@ public class ManaHelper {
 		ChunkManaData data = manager.getChunkManaData(chunk.getPos());
 		if(data == null)
 			data = manager.initChunkManaData(chunk);
-		
-		PrimalArcane.logger.info("consume +:" + data.positiveMana + " -:" + data.negativeMana 
-				+ " max:" + data.maxMana + " s:" + data.recoverySpeed + " r:" + data.positiveNegativeRatio);
 		
 		if(type == ManaType.POSITIVE) {
 			if(data.positiveMana - cost >= 0) {
@@ -122,5 +120,14 @@ public class ManaHelper {
 		}
 		
 		return result;
+	}
+	
+	public static void sendManaDataToClient(World world, Chunk chunk, EntityPlayerMP player) {
+		ManaDataManager manager = ManaDataManager.getManager(world);
+		ChunkManaData data = manager.getChunkManaData(chunk.getPos());
+		if(data == null)
+			data = manager.initChunkManaData(chunk);
+		
+		NetworkHandler.INSTANCE.sendMessageToPlayer(new MessageMana(data), player);
 	}
 }
