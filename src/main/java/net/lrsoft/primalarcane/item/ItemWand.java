@@ -43,8 +43,6 @@ public class ItemWand extends Item {
 		if (spell != null) {
 			if(ManaHelper.consumeMana(worldIn, chunk, spell.getConsumeManaType(), spell.getSpellCost())){
 				spell.onSpell(worldIn, player, stack);
-				// send data to client ui
-				ManaHelper.sendManaDataToClient(worldIn, chunk, (EntityPlayerMP)player);
 			}
 		}
 	}

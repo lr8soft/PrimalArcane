@@ -15,14 +15,11 @@ public class ManaHelper {
 		POSITIVE, NEGATIVE, NONE
 	}
 	
-	public static void updateChunkMana(World world, Chunk chunk) {
-		ManaDataManager manager = ManaDataManager.getManager(world);
-		ChunkManaData data = manager.getChunkManaData(chunk.getPos());
-		if(data == null)
-			data = manager.initChunkManaData(chunk);
-		
+	public static void updateChunkMana(Chunk chunk) {
+		ChunkManaData data = ManaDataManager.getChunkManaData(chunk);
+
 		// calc as second
-		long nowTime = manager.getWorld().getTotalWorldTime();
+		long nowTime = chunk.getWorld().getTotalWorldTime();
 		// 1s = 20tick
 		float deltaTime = (nowTime - data.lastUpdateTime) / 20.0f;
 		
@@ -79,16 +76,13 @@ public class ManaHelper {
 		
 		if(result) {
 			data.lastUpdateTime = nowTime;
-			manager.setChunkManaData(data, chunk.getPos());
+			ManaDataManager.setChunkManaData(chunk, data);
 		}
 	}
 
 	public static boolean consumeMana(World world, Chunk chunk, ManaType type, float cost) {
 		boolean result = false;
-		ManaDataManager manager = ManaDataManager.getManager(world);
-		ChunkManaData data = manager.getChunkManaData(chunk.getPos());
-		if(data == null)
-			data = manager.initChunkManaData(chunk);
+		ChunkManaData data = ManaDataManager.getChunkManaData(chunk);
 		
 		if(type == ManaType.POSITIVE) {
 			if(data.positiveMana - cost >= 0) {
@@ -115,18 +109,14 @@ public class ManaHelper {
 		
 		// update mana data
 		if(result) {
-			manager.setChunkManaData(data, chunk.getPos());
+			ManaDataManager.setChunkManaData(chunk, data);
 		}
 		
 		return result;
 	}
 	
 	public static void sendManaDataToClient(World world, Chunk chunk, EntityPlayerMP player) {
-		ManaDataManager manager = ManaDataManager.getManager(world);
-		ChunkManaData data = manager.getChunkManaData(chunk.getPos());
-		if(data == null)
-			data = manager.initChunkManaData(chunk);
-		
+		ChunkManaData data = ManaDataManager.getChunkManaData(chunk);
 		NetworkHandler.INSTANCE.sendMessageToPlayer(new MessageMana(data), player);
 	}
 }
