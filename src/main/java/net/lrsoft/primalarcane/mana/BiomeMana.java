@@ -9,6 +9,7 @@ public class BiomeMana {
 	private static HashMap<Biome, Float> biomeManaPNRate = new HashMap<>();
 	private static HashMap<Biome, Float> biomeManaRecoverySpeed = new HashMap<>();
 	static {
+		// postive-negative mana rate
 		addBiomeManaPNRate(Biomes.BIRCH_FOREST, 0.75f);
 		addBiomeManaPNRate(Biomes.BIRCH_FOREST_HILLS, 0.8f);
 		addBiomeManaPNRate(Biomes.COLD_BEACH, 0.3f);
@@ -48,6 +49,7 @@ public class BiomeMana {
 		addBiomeManaPNRate(Biomes.ROOFED_FOREST, 0.75f);
 		addBiomeManaPNRate(Biomes.VOID, 0.0f);
 		
+		// mana recovery speed
 		addBiomeManaRecoverySpeed(Biomes.VOID, 10.0f);
 		addBiomeManaRecoverySpeed(Biomes.HELL, 10.0f);
 		addBiomeManaRecoverySpeed(Biomes.OCEAN, 6.0f);

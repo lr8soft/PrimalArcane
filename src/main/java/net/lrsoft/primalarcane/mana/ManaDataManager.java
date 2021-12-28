@@ -15,6 +15,8 @@ import com.google.gson.reflect.TypeToken;
 
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.util.MathUtils;
+import net.lrsoft.primalarcane.util.Noise;
+import net.lrsoft.primalarcane.util.Noise.NoiseGenerator;
 import net.minecraft.init.Biomes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.ChunkPos;
@@ -26,6 +28,8 @@ import net.minecraft.world.storage.WorldSavedData;
 
 public class ManaDataManager extends WorldSavedData {
 	public static final String DATA_NAME = PrimalArcane.MODID + "_manadata";
+	
+	private static NoiseGenerator generator = new NoiseGenerator();
 	
 	private HashMap<ChunkPos, ChunkManaData> chunkData = new HashMap<>();
 	
@@ -75,7 +79,9 @@ public class ManaDataManager extends WorldSavedData {
 		}
 		data.positiveNegativeRatio = totalRate / biomeCount;
 		data.recoverySpeed = 7.0f * (recoveryRate / biomeCount);
-		data.maxMana = (float) MathUtils.getRandomFromRange(1000d, 200d);
+		
+		ChunkPos pos = chunk.getPos();
+		data.maxMana = generator.generateHeight(pos.x, pos.z);
 		
 		data.positiveMana = data.positiveNegativeRatio * data.maxMana;
 		data.negativeMana = data.maxMana - data.positiveMana;

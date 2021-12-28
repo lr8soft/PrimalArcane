@@ -15,7 +15,7 @@ public class ManaHelper {
 		POSITIVE, NEGATIVE, NONE
 	}
 	
-	public static void updateMana(World world, Chunk chunk) {
+	public static void updateChunkMana(World world, Chunk chunk) {
 		ManaDataManager manager = ManaDataManager.getManager(world);
 		ChunkManaData data = manager.getChunkManaData(chunk.getPos());
 		if(data == null)
@@ -84,7 +84,6 @@ public class ManaHelper {
 	}
 
 	public static boolean consumeMana(World world, Chunk chunk, ManaType type, float cost) {
-		updateMana(world, chunk);
 		boolean result = false;
 		ManaDataManager manager = ManaDataManager.getManager(world);
 		ChunkManaData data = manager.getChunkManaData(chunk.getPos());

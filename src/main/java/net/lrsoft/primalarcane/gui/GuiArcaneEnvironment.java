@@ -18,7 +18,7 @@ public class GuiArcaneEnvironment extends Gui
         int width = scaled.getScaledWidth();
         int height = scaled.getScaledHeight();
  
-        drawCenteredString(mc.fontRenderer, text, 2 * text.length(), 30, Integer.parseInt("FFFFFF", 16));
+        drawString(mc.fontRenderer, text, 30, 30, Integer.parseInt("FFFFFF", 16));
         
         StringBuilder builder = new StringBuilder();
         builder.append("+:");
@@ -30,7 +30,7 @@ public class GuiArcaneEnvironment extends Gui
         
         String result = builder.toString();
         
-        drawCenteredString(mc.fontRenderer, result, 2 * result.length(), 60, Integer.parseInt("FFAA00", 16));
+        drawString(mc.fontRenderer, result, 30, 60, Integer.parseInt("FFAA00", 16));
     }
     
     public static void updateManaInfo(float p, float n, float max) {

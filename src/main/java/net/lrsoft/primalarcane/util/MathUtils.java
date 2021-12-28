@@ -87,5 +87,4 @@ public class MathUtils{
 		else
 			return false;
 	}
-
 }
