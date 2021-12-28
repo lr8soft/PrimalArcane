@@ -30,17 +30,25 @@ public class ChunkManaListener {
         if(currentManaUpdateTick < chunkManaUpdateTick)
         	currentManaUpdateTick++;
         else {
-	        for(Chunk chunk : activeChunks)
-	        	ManaHelper.updateChunkMana(chunk);
+	        //for(Chunk chunk : activeChunks)
+	        //	ManaHelper.updateChunkMana(chunk);
 	        
 	        // send current chunk mana data to client player
-	        List<EntityPlayerMP> players = event.world.getPlayers(EntityPlayerMP.class, (p) -> true);
+	        /*List<EntityPlayerMP> players = event.world.getPlayers(EntityPlayerMP.class, (p) -> true);
 	        for(EntityPlayerMP player : players) {
 	        	Chunk playerChunk = event.world.getChunkFromBlockCoords(player.getPosition());
 	        	ManaHelper.sendManaDataToClient(event.world, playerChunk, player);
-	        }
+	        	ManaHelper.updateChunkMana(playerChunk);
+	        }*/
 	        
 	        currentManaUpdateTick = 0;
+        }
+        
+        List<EntityPlayerMP> players = event.world.getPlayers(EntityPlayerMP.class, (p) -> true);
+        for(EntityPlayerMP player : players) {
+        	Chunk playerChunk = event.world.getChunkFromBlockCoords(player.getPosition());
+        	ManaHelper.sendManaDataToClient(event.world, playerChunk, player);
+        	ManaHelper.updateChunkMana(playerChunk);
         }
 	}
 	

@@ -22,6 +22,12 @@ public class ManaHelper {
 		long nowTime = chunk.getWorld().getTotalWorldTime();
 		// 1s = 20tick
 		float deltaTime = (nowTime - data.lastUpdateTime) / 20.0f;
+		if(deltaTime <= 0) {
+			data.lastUpdateTime = nowTime - 1;
+			ManaDataManager.setChunkManaData(chunk, data);
+			return;
+		}
+
 		
 		float maxPositiveMana = data.maxMana * data.positiveNegativeRatio;
 		float maxNegativeMana = data.maxMana - maxPositiveMana;
@@ -46,7 +52,7 @@ public class ManaHelper {
 			// consume NP mana
 			float delta = 0.0f;
 			boolean addPositive = false;
-			
+
 			// consume +mana
 			if(maxPositiveMana - data.positiveMana > 1e-4) {
 				delta = maxPositiveMana - data.positiveMana;
@@ -56,7 +62,7 @@ public class ManaHelper {
 			else if(data.positiveMana - maxPositiveMana > 1e-4) {
 				delta = data.positiveMana - maxPositiveMana;
 			}
-
+			
 			if(delta != 0.0f) {
 				if(delta >= updateValue) {
 					if(addPositive) {

@@ -68,7 +68,7 @@ public class GuiArcaneEnvironment extends Gui
             GlStateManager.scale(xScale, yScale, 0.5f);
             
             this.drawModalRectWithCustomSizedTextureReverb(0, texWidth - postiveTexHeight,
-            		20.0f,  0.0f,
+            		38.0f,  0.0f,
             		20, postiveTexHeight,
             		texWidth, texHeight);
             
@@ -87,7 +87,7 @@ public class GuiArcaneEnvironment extends Gui
             GlStateManager.scale(xScale, yScale, 0.5f);
     		
             this.drawModalRectWithCustomSizedTexture(0, 0,
-            		38.0f,  0.0f,
+            		20.0f,  0.0f,
             		20, negativeTexHeight,
             		texWidth, texHeight);
 
