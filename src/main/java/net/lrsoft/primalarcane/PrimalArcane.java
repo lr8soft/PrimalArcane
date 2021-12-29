@@ -29,6 +29,9 @@ public class PrimalArcane {
 
 	@SidedProxy(clientSide = "net.lrsoft.primalarcane.proxy.ClientProxy", serverSide = "net.lrsoft.primalarcane.proxy.CommonProxy")
 	public static CommonProxy proxy;
+	
+	@Instance(PrimalArcane.MODID)
+    public static PrimalArcane Instance;
 
 	public static final CreativeTabs CREATIVE_TAB = new CreativeTabs("primalarcaneTabs") {
 		@Override
@@ -50,7 +53,7 @@ public class PrimalArcane {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		proxy.postInit(event);
-		MinecraftForge.EVENT_BUS.register(new RenderGuiHandler());
+		NetworkRegistry.INSTANCE.registerGuiHandler(Instance, new RenderGuiHandler());
 		NetworkHandler.INSTANCE.initNetworkHandler();
 	}
 

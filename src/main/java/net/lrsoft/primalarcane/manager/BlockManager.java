@@ -1,10 +1,14 @@
 package net.lrsoft.primalarcane.manager;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 import net.lrsoft.primalarcane.PrimalArcane;
+import net.lrsoft.primalarcane.block.BlockUniformTemplate;
+import net.lrsoft.primalarcane.block.tileentity.TileEntityWandWorkBench;
+import net.lrsoft.primalarcane.gui.RenderGuiHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -27,50 +31,42 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.registries.IForgeRegistry;
 import scala.reflect.api.Trees.NewApi;
 @Mod.EventBusSubscriber(modid = PrimalArcane.MODID)
 public class BlockManager {
+	public static List<BlockUniformTemplate> modBlockList = new ArrayList<>();
 	
-	public static void onBlockRecipeInit()
-	{
-
+	public static BlockUniformTemplate wandWorkBench;
+	
+	static {
+		wandWorkBench = new BlockUniformTemplate(Material.IRON, "wand_workbench", TileEntityWandWorkBench.class, RenderGuiHandler.WAND_WORKBENCH_ID);
+		modBlockList.add(wandWorkBench);
+		
 	}
 	
 	@SubscribeEvent
 	public static void onCommonBlockInit(RegistryEvent.Register<Block> event) {
-	    /*event.getRegistry().register(niobiumOre);
-	    event.getRegistry().register(titaniumOre);
-	    event.getRegistry().register(titaniumBlock);
-	    
-	    event.getRegistry().register(lighterBlock);
-	    
-	    event.getRegistry().register(geomagneticPedestal);
-	    event.getRegistry().register(geomagneticAntenna);
-	    
-	    event.getRegistry().register(titaniumScaffold);
-	    GameRegistry.registerTileEntity(TileEntityLighterBlock.class,
-	    		new ResourceLocation(PrimalArcane.MODID, "lighter_block"));*/
+		IForgeRegistry<Block> registry = event.getRegistry();
+		for(BlockUniformTemplate block : modBlockList) {
+			registry.register(block);
+			if(block.hasTileEntity()) {
+				GameRegistry.registerTileEntity(block.getTileEntityClazz(), block.getRegistryName());
+			}
+		}
 	}
 	
 	@SubscribeEvent
 	public static void onCommonBlockItemInit(RegistryEvent.Register<Item> event) {
-		/*event.getRegistry().register(new ItemBlock(niobiumOre).setRegistryName(niobiumOre.getRegistryName()));
-		event.getRegistry().register(new ItemBlock(titaniumOre).setRegistryName(titaniumOre.getRegistryName()));
-		event.getRegistry().register(new ItemBlock(titaniumBlock).setRegistryName(titaniumBlock.getRegistryName()));
-		event.getRegistry().register(new ItemBlock(titaniumScaffold).setRegistryName(titaniumScaffold.getRegistryName()));
-		
-		event.getRegistry().register(new ItemBlock(geomagneticPedestal).setRegistryName(geomagneticPedestal.getRegistryName()));
-		event.getRegistry().register(new ItemBlock(geomagneticAntenna).setRegistryName(geomagneticAntenna.getRegistryName()));*/
+		IForgeRegistry<Item> registry = event.getRegistry();
+		for(BlockUniformTemplate block : modBlockList) {
+			registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+		}
 	}
 	
-	private static ItemStack getAllTypeStack(ItemStack itemstack)
+	public static void onBlockRecipeInit()
 	{
-		return new ItemStack(itemstack.getItem(), 1, OreDictionary.WILDCARD_VALUE);
-	}
-	
-	private static ItemStack getAllTypeStack(Item item)
-	{
-		return new ItemStack(item, 1, OreDictionary.WILDCARD_VALUE);
+
 	}
 	
 }
