@@ -10,6 +10,11 @@ import net.minecraft.item.ItemStack;
 public class ContainerWandWorkbench extends Container {
 
 	public ContainerWandWorkbench(InventoryPlayer inventory, TileEntityWandWorkBench te) {
+		// slot 0 wand
+		// slot 1/2 spell
+		addSlotToContainer(new Slot(te, 1, 51, 43));
+		addSlotToContainer(new Slot(te, 0, 80, 42));
+		addSlotToContainer(new Slot(te, 2, 110, 43));
 		// backpack
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column)
