@@ -31,11 +31,7 @@ public class GuiArcaneEnvironment extends Gui
         int height = scaled.getScaledHeight();
  
         drawString(mc.fontRenderer, text, 30, 30, Integer.parseInt("FFFFFF", 16));
-        
-        
-        int startX = 20;
-        int startY = 20;
-        
+
         float xScale = 0.5f;
         float yScale = 0.4f;
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -44,13 +40,12 @@ public class GuiArcaneEnvironment extends Gui
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
         GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
         
+        float translateX = 15.0f;
+        float translateY = (height - yScale * texHeight) / 2.0f;
         // render mana progress frame
         {
-
     		GlStateManager.pushMatrix();
-    		
-    		float translateY = (height - yScale * texHeight) / 2.0f;
-            GlStateManager.translate(startX, translateY, this.zLevel);
+            GlStateManager.translate(translateX, translateY, this.zLevel);
             GlStateManager.scale(xScale, yScale, 0.5f);
 
             this.drawModalRectWithCustomSizedTexture(0, 0, 0.0f, 0.0f, 20, texHeight, texWidth, texHeight);
@@ -63,8 +58,7 @@ public class GuiArcaneEnvironment extends Gui
         	
     		GlStateManager.pushMatrix();
     		
-    		float translateY = (height - yScale * texHeight) / 2.0f;
-            GlStateManager.translate(startX, translateY, this.zLevel);
+            GlStateManager.translate(translateX, translateY, this.zLevel);
             GlStateManager.scale(xScale, yScale, 0.5f);
             
             this.drawModalRectWithCustomSizedTextureReverb(0, texWidth - postiveTexHeight,
@@ -82,8 +76,7 @@ public class GuiArcaneEnvironment extends Gui
         	
     		GlStateManager.pushMatrix();
     		
-    		float translateY = (height - yScale * texHeight) / 2.0f;
-            GlStateManager.translate(startX, translateY, this.zLevel);
+            GlStateManager.translate(translateX, translateY, this.zLevel);
             GlStateManager.scale(xScale, yScale, 0.5f);
     		
             this.drawModalRectWithCustomSizedTexture(0, 0,

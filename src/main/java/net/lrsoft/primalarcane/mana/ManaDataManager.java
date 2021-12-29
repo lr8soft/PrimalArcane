@@ -127,7 +127,7 @@ public class ManaDataManager {
 			recoveryRate += BiomeMana.getBiomeManaRecoverySpeed(biome);
 		}
 		data.positiveNegativeRatio = totalRate / biomeCount;
-		data.recoverySpeed = 7.0f * (recoveryRate / biomeCount);
+		data.recoverySpeed = 15.0f * (recoveryRate / biomeCount);
 		
 		ChunkPos pos = chunk.getPos();
 		data.maxMana = generator.generateHeight(pos.x, pos.z);

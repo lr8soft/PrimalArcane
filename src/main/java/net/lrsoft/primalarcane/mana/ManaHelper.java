@@ -22,7 +22,7 @@ public class ManaHelper {
 		long nowTime = chunk.getWorld().getTotalWorldTime();
 		// 1s = 20tick
 		float deltaTime = (nowTime - data.lastUpdateTime) / 20.0f;
-		if(deltaTime <= 0) {
+		if(deltaTime < 0) {
 			data.lastUpdateTime = nowTime - 1;
 			ManaDataManager.setChunkManaData(chunk, data);
 			return;

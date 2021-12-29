@@ -6,9 +6,9 @@ public class Noise {
 	public static class NoiseGenerator {
 		private Vec3d offset0, offset1, offset2;
 		
-	    public float baseHeight = 400f;
+	    public float baseHeight = 1000f;
 	    public float frequency = 0.025f;
-	    public float amplitude = 150f;
+	    public float amplitude = 500f;
 	    
 	    public NoiseGenerator(float baseHeight, float frequency, float amplitude) {
 	    	this();
