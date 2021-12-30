@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.lrsoft.primalarcane.PrimalArcane;
+import net.lrsoft.primalarcane.block.BlockLighter;
 import net.lrsoft.primalarcane.block.BlockUniformTemplate;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityWandWorkBench;
 import net.lrsoft.primalarcane.gui.RenderGuiHandler;
@@ -38,11 +39,14 @@ public class BlockManager {
 	public static List<BlockUniformTemplate> modBlockList = new ArrayList<>();
 	
 	public static BlockUniformTemplate wandWorkBench;
+	public static BlockUniformTemplate lighterBlock;
 	
 	static {
 		wandWorkBench = new BlockUniformTemplate(Material.IRON, "wand_workbench", TileEntityWandWorkBench.class, RenderGuiHandler.WAND_WORKBENCH_ID);
 		modBlockList.add(wandWorkBench);
 		
+		lighterBlock = new BlockLighter();
+		modBlockList.add(lighterBlock);
 	}
 	
 	@SubscribeEvent
@@ -64,8 +68,7 @@ public class BlockManager {
 		}
 	}
 	
-	public static void onBlockRecipeInit()
-	{
+	public static void onBlockRecipeInit() {
 
 	}
 	

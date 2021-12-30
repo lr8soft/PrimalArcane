@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityWandWorkBench;
 import net.lrsoft.primalarcane.container.ContainerWandWorkbench;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -28,6 +29,7 @@ public class GuiWandWorkbench extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		this.fontRenderer.drawString(I18n.format(PrimalArcane.MODID + ".text.wand_workbench"), 55, 6, Integer.parseInt("FFFFFF", 16));
+
 	}
 
 	@Override

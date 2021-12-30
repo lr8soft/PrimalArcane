@@ -1,9 +1,14 @@
 package net.lrsoft.primalarcane.block.tileentity;
 
 import net.lrsoft.primalarcane.PrimalArcane;
+import net.lrsoft.primalarcane.item.ItemSpell;
+import net.lrsoft.primalarcane.item.ItemWand;
+import net.lrsoft.primalarcane.item.ItemWand.WandSlot;
+import net.lrsoft.primalarcane.manager.ItemManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -14,13 +19,62 @@ import scala.reflect.internal.Trees.This;
 public class TileEntityWandWorkBench extends TileEntity implements ITickable, IInventory{
 
     protected NonNullList<ItemStack> inventorySlotItemStack = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+    
+    protected boolean needUpdateSpell = true;
 	
 	@Override
 	public void update() {
-		if(!this.world.isRemote)
+		if(this.world.isRemote)
 			return;
 		
-		//PrimalArcane.logger.info("te update:" + this.getPos());
+		// slot update = need update wand data
+		if(!needUpdateSpell)
+			return;
+
+		ItemStack wandStack = getStackInSlot(0);
+		ItemStack spellStack0 = getStackInSlot(1);
+		ItemStack spellStack1 = getStackInSlot(2);
+		
+		if(wandStack.isEmpty()) 
+			return;
+
+		if(!(wandStack.getItem() instanceof ItemWand))
+			return;
+		
+		ItemWand wand = (ItemWand)wandStack.getItem();
+		ItemSpell spell0 = getSpellItem(spellStack0);
+		ItemSpell spell1 = getSpellItem(spellStack1);
+		
+		boolean haveUpdate = false;
+		// write spell the wand
+		if(spell0 != null) {
+			wand.setWandSpell(wandStack, WandSlot.LEFT, spell0.getSpell());
+			haveUpdate = true;
+		}
+		
+		if(spell1 != null) {
+			wand.setWandSpell(wandStack, WandSlot.RIGHT, spell1.getSpell());
+			haveUpdate = true;
+		}
+		
+		if(haveUpdate) {
+			needUpdateSpell = false;
+			this.markDirty();
+		}
+		
+	}
+	
+	private static ItemSpell getSpellItem(ItemStack stack) {
+		if(stack.isEmpty()) {
+			return null;
+		}
+		
+		Item item = stack.getItem();
+		if(item instanceof ItemSpell) {
+			return (ItemSpell)item;
+		}
+		
+		return null;
 	}
 
 	@Override
@@ -76,6 +130,7 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
             stack.setCount(this.getInventoryStackLimit());
         }
         this.markDirty();
+        needUpdateSpell = true;
 	}
 
 	@Override
@@ -98,10 +153,26 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
 	public void closeInventory(EntityPlayer player) {
 		this.markDirty();
 	}
+	
 
 	@Override
 	public boolean isItemValidForSlot(int index, ItemStack stack) {
-		return index < 3;
+		if(stack.isEmpty())
+			return false;
+		
+		Item item = stack.getItem();
+		if(index == 0) {
+			if(item instanceof ItemWand) {
+				return true;
+			}
+		}
+			
+		if(index == 1 || index == 2) {
+			if(item instanceof ItemSpell) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override

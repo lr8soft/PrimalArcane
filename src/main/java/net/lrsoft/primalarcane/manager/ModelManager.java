@@ -4,6 +4,8 @@ import java.util.Map.Entry;
 
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.block.BlockUniformTemplate;
+import net.lrsoft.primalarcane.block.renderer.LighterRenderer;
+import net.lrsoft.primalarcane.block.tileentity.TileEntityLighterBlock;
 import net.lrsoft.primalarcane.entity.EntityFireball;
 import net.lrsoft.primalarcane.entity.EntityShootSpell;
 import net.lrsoft.primalarcane.entity.renderer.FireSpellRenderer;
@@ -57,18 +59,14 @@ public class ModelManager {
 
 	@SubscribeEvent
 	public static void onBlockModelInit(ModelRegistryEvent event) {
-		// ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(BlockManager.niobiumOre),
-		// 0, new
-		// ModelResourceLocation(BlockManager.niobiumOre.getRegistryName(),"normal"));
-		// ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLighterBlock.class,
-		// new LighterRenderer());
-
 		for (BlockUniformTemplate block : BlockManager.modBlockList) {
-			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
-					new ModelResourceLocation(block.getRegistryName(), "normal"));
-			// ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLighterBlock.class,
-			// new LighterRenderer())
+			if(block.getNeedItemBlock()) {
+				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
+						new ModelResourceLocation(block.getRegistryName(), "normal"));
+			}
 		}
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLighterBlock.class, new LighterRenderer());
 	}
 
 	@SubscribeEvent

@@ -6,3 +6,8 @@ tile.primalarcane.block.wand_workbench.name=法杖装配台
 item.primalarcane.wand.normal_wand.name=法杖
 
 item.primalarcane.spell.spell_fireball.name=火球术
+item.primalarcane.spell.spell_lightning.name=雷击术
+item.primalarcane.spell.spell_lighter.name=照明术
+
+primalarcane.text.spell=法术
+primalarcane.text.none=无

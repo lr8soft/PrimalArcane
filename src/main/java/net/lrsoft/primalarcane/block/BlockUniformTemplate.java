@@ -15,6 +15,7 @@ import net.minecraft.world.World;
 public class BlockUniformTemplate extends Block implements ITileEntityProvider{
 	private Class<? extends TileEntity> clazz;
 	private int guiId;
+	private boolean needItemBlock = true;
 	public BlockUniformTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz) {
 		this(materialIn, blockName, clazz, -1);
 	}
@@ -72,5 +73,11 @@ public class BlockUniformTemplate extends Block implements ITileEntityProvider{
 		return true;
 	}
 	
-
+	public void setNeedItemBlock(boolean value) {
+		this.needItemBlock = value;
+	}
+	
+	public boolean getNeedItemBlock() {
+		return this.needItemBlock;
+	}
 }

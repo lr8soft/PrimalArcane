@@ -28,10 +28,17 @@ public class SpellManager {
 	}
 	
 	public static Spell fireball;
+	public static Spell lightning;
+	public static Spell lighter;
 
 	static {
 		fireball = new FireballSpell();
+		lightning = new LightningSpell();
+		lighter = new LighterSpell();
+		
 		addSpell(fireball);
+		addSpell(lightning);
+		addSpell(lighter);
 	}
 
 	public static Spell getSpell(String spellName) {

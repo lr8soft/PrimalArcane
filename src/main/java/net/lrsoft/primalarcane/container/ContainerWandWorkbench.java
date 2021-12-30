@@ -8,13 +8,15 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public class ContainerWandWorkbench extends Container {
-
+	private TileEntityWandWorkBench tileEntity;
 	public ContainerWandWorkbench(InventoryPlayer inventory, TileEntityWandWorkBench te) {
+		tileEntity = te;
+		
 		// slot 0 wand
 		// slot 1/2 spell
-		addSlotToContainer(new Slot(te, 1, 51, 43));
-		addSlotToContainer(new Slot(te, 0, 80, 42));
-		addSlotToContainer(new Slot(te, 2, 110, 43));
+		addSlotToContainer(new SlotWithFilter(te, 0, 80, 42));
+		addSlotToContainer(new SlotWithFilter(te, 1, 51, 43));
+		addSlotToContainer(new SlotWithFilter(te, 2, 110, 43));
 		// backpack
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
@@ -28,10 +30,10 @@ public class ContainerWandWorkbench extends Container {
         }
 	}
 	
+	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		// TODO Auto-generated method stub
-		return true;
+		return tileEntity.isUsableByPlayer(playerIn);
 	}
 	
 	
