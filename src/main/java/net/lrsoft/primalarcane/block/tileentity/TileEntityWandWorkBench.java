@@ -129,8 +129,8 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
 	public void readFromNBT(NBTTagCompound compound) {
 		// TODO Auto-generated method stub
 		super.readFromNBT(compound);
-        this.inventorySlotItemStack =
-                NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        this.inventorySlotItemStack = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, this.inventorySlotItemStack);
 	}
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
