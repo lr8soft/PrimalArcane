@@ -17,13 +17,15 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 public class FireballSpell implements Spell {
 
 	@Override
-	public void onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
+	public boolean onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
 		EntityFireball entity = new EntityFireball(worldIn, playerIn, 6f, 250);
 		entity.shoot(playerIn.rotationYaw, playerIn.rotationPitch, 2.0f);
 		worldIn.spawnEntity(entity);
 		
 		worldIn.playSound((EntityPlayer)null, playerIn.posX , playerIn.posY, playerIn.posZ, 
 				SoundEvents.ENTITY_ENDERDRAGON_SHOOT, playerIn.getSoundCategory(), 0.8f, 0.55F);
+		
+		return true;
 	}
 
 	@Override

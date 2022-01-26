@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public interface Spell {
-	public void onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack);
+	public boolean onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack);
 	public String getSpellName();
 	public ManaType getConsumeManaType();
 	public float getSpellCost();

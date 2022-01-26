@@ -12,7 +12,7 @@ import net.minecraft.world.chunk.Chunk;
 public class ManaHelper {
 
 	public enum ManaType {
-		POSITIVE, NEGATIVE, NONE
+		POSITIVE, NEGATIVE, BOTH
 	}
 	
 	public static void updateChunkMana(Chunk chunk) {
@@ -39,15 +39,7 @@ public class ManaHelper {
 		boolean result = false;
 		// consume none mana
 		if(data.maxMana - currentMaxMana > 1e-2) {
-			PrimalArcane.logger.info("void mana");
-			float delta = data.maxMana - currentMaxMana;
-			if(delta >= updateValue) {
-				float newMax = currentMaxMana + updateValue;
-				data.positiveMana = newMax * data.positiveNegativeRatio;
-				data.negativeMana = newMax - data.positiveMana;
-				result = true;
-			}
-			
+			;
 		}else {
 			// consume NP mana
 			float delta = 0.0f;
@@ -85,6 +77,20 @@ public class ManaHelper {
 			ManaDataManager.setChunkManaData(chunk, data);
 		}
 	}
+	
+	public static boolean canConsumeMana(World world, Chunk chunk, ManaType type, float cost) {
+		boolean result = false;
+		ChunkManaData data = ManaDataManager.getChunkManaData(chunk);
+		PrimalArcane.logger.info(data.positiveMana + " " + data.negativeMana + " " + cost);
+		switch(type) {
+		case POSITIVE:
+			return data.positiveMana - cost >= 0;
+		case NEGATIVE:
+			return data.negativeMana - cost >= 0;
+		default:
+			return false;
+		}
+	}
 
 	public static boolean consumeMana(World world, Chunk chunk, ManaType type, float cost) {
 		boolean result = false;
@@ -104,13 +110,7 @@ public class ManaHelper {
 				result = true;
 			}
 		}else {
-			float totalMana = data.positiveMana + data.negativeMana;
-			float newTotal = totalMana - cost;
-			if(newTotal >= 0) {
-				data.positiveMana = newTotal * data.positiveNegativeRatio;
-				data.negativeMana = newTotal - data.positiveMana;
-				result = true;
-			}
+			
 		}
 		
 		// update mana data

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class LightningSpell implements Spell {
 
 	@Override
-	public void onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
+	public boolean onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
 		Vec3d lookat = playerIn.getLookVec();
 		
 		float blockReachDistance = 15.0f;
@@ -24,7 +24,7 @@ public class LightningSpell implements Spell {
 		
         RayTraceResult result = worldIn.rayTraceBlocks(vec3d, vec3d2, false, false, true);
         if(result == null)
-        	return;
+        	return false;
         
         Vec3d target = result.hitVec;
         if(result.entityHit != null) {
@@ -33,6 +33,8 @@ public class LightningSpell implements Spell {
         }
         
         worldIn.addWeatherEffect(new EntityLightningBolt(worldIn, target.x, target.y, target.z, false));
+        
+        return true;
 	}
 
 	@Override

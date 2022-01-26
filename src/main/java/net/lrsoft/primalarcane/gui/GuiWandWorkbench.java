@@ -19,16 +19,22 @@ public class GuiWandWorkbench extends GuiContainer {
 	private InventoryPlayer playerInventory;
 	public GuiWandWorkbench(InventoryPlayer inventory, TileEntityWandWorkBench te) {
 		super(new ContainerWandWorkbench(inventory, te));
-		this.doesGuiPauseGame();
 		tileEntity = te;
 		playerInventory = inventory;
 
 	}
 	
 	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+        this.drawDefaultBackground();
+        super.drawScreen(mouseX, mouseY, partialTicks);
+        this.renderHoveredToolTip(mouseX, mouseY);
+	}
+	
+	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		this.fontRenderer.drawString(I18n.format(PrimalArcane.MODID + ".text.wand_workbench"), 55, 6, Integer.parseInt("FFFFFF", 16));
+		this.fontRenderer.drawString(I18n.format("primalarcane.text.wand_workbench"), 60, 6, Integer.parseInt("000000", 16));
 
 	}
 

@@ -3,7 +3,6 @@ package net.lrsoft.primalarcane.block.tileentity;
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.item.ItemSpell;
 import net.lrsoft.primalarcane.item.ItemWand;
-import net.lrsoft.primalarcane.item.ItemWand.WandSlot;
 import net.lrsoft.primalarcane.manager.ItemManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -48,12 +47,12 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
 		boolean haveUpdate = false;
 		// write spell the wand
 		if(spell0 != null) {
-			wand.setWandSpell(wandStack, WandSlot.LEFT, spell0.getSpell());
+			wand.setWandSpell(wandStack, 0, spell0.getSpell());
 			haveUpdate = true;
 		}
 		
 		if(spell1 != null) {
-			wand.setWandSpell(wandStack, WandSlot.RIGHT, spell1.getSpell());
+			wand.setWandSpell(wandStack, 1, spell1.getSpell());
 			haveUpdate = true;
 		}
 		

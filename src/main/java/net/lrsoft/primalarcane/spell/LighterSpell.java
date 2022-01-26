@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 public class LighterSpell implements Spell {
 
 	@Override
-	public void onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
+	public boolean onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
 		/*Vec3d lookat = playerIn.getLookVec();
 		
 		float blockReachDistance = 5.0f;
@@ -41,6 +41,7 @@ public class LighterSpell implements Spell {
         
         if (playerIn instanceof EntityPlayerMP)
         	CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)playerIn, blockPos, stack);*/
+		return true;
 	}
 
 	@Override

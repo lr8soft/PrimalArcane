@@ -8,9 +8,12 @@ import net.lrsoft.primalarcane.entity.EntityShootSpell;
 import net.lrsoft.primalarcane.mana.ManaHelper;
 import net.lrsoft.primalarcane.spell.Spell;
 import net.lrsoft.primalarcane.spell.SpellManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -32,11 +35,7 @@ public class ItemWand extends Item {
 		setMaxStackSize(1);
 	}
 
-	public enum WandSlot {
-		LEFT, RIGHT
-	}
-
-	public void doWandSpell(World worldIn, EntityPlayer player, ItemStack stack, WandSlot slot) {
+	public void doWandSpell(World worldIn, EntityPlayer player, ItemStack stack, int slot) {
 		if (worldIn.isRemote)
 			return;
 		
@@ -45,26 +44,17 @@ public class ItemWand extends Item {
 		
 		Spell spell = getWandSpell(stack, slot);
 		if (spell != null) {
-			if(ManaHelper.consumeMana(worldIn, chunk, spell.getConsumeManaType(), spell.getSpellCost())){
-				spell.onSpell(worldIn, player, stack);
+			if(ManaHelper.canConsumeMana(worldIn, chunk, spell.getConsumeManaType(), spell.getSpellCost())){
+				if(spell.onSpell(worldIn, player, stack)) {
+					ManaHelper.consumeMana(worldIn, chunk, spell.getConsumeManaType(), spell.getSpellCost());
+				}
 			}
 		}
 	}
-
-
+	
 	@Override
-	public boolean onEntitySwing(EntityLivingBase entityLiving, ItemStack wand) {
-		long lastRightClick = getLastClick(wand);
-		long currentTime = System.currentTimeMillis();
-
-		if (currentTime - lastRightClick > getSpellInterval(wand, WandSlot.LEFT)) {
-			if (entityLiving instanceof EntityPlayer) {
-				doWandSpell(entityLiving.world, (EntityPlayer) entityLiving, wand, WandSlot.LEFT);
-				setLastClick(wand, lastRightClick);
-			}
-		}
-		
-		return super.onEntitySwing(entityLiving, wand);
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 
 	@Override
@@ -73,8 +63,8 @@ public class ItemWand extends Item {
 		long lastRightClick = getLastClick(wand);
 		long currentTime = System.currentTimeMillis();
 
-		if (currentTime - lastRightClick > getSpellInterval(wand, WandSlot.RIGHT)) {
-			doWandSpell(worldIn, playerIn, wand, WandSlot.RIGHT);
+		if (currentTime - lastRightClick > getSpellInterval(wand, 0)) {
+			doWandSpell(worldIn, playerIn, wand, 0);
 			setLastClick(wand, lastRightClick);
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, wand);
 		}
@@ -84,24 +74,17 @@ public class ItemWand extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		String strSpellLeft = I18n.format("primalarcane.text.spell") + ": ";
-		Spell spell = getWandSpell(stack, WandSlot.LEFT);
-		if(spell != null) {
-			strSpellLeft += I18n.format("item.primalarcane.spell." + spell.getSpellName() + ".name");
-		}else {
-			strSpellLeft += I18n.format("primalarcane.text.none");
+		int maxSlot = getSlotCount();
+		for(int slot = 0; slot != maxSlot; slot++) {
+			String slotStr = I18n.format("primalarcane.text.spell") + ": ";;
+			Spell spell = getWandSpell(stack, slot);
+			if(spell != null) {
+				slotStr += I18n.format("item.primalarcane.spell." + spell.getSpellName() + ".name");
+			}else {
+				slotStr += I18n.format("primalarcane.text.none");
+			}
+			tooltip.add(slotStr);
 		}
-		
-		String strSpellRight = I18n.format("primalarcane.text.spell") + ": ";
-		spell = getWandSpell(stack, WandSlot.RIGHT);
-		if(spell != null) {
-			strSpellRight += I18n.format("item.primalarcane.spell." + spell.getSpellName() + ".name");
-		}else {
-			strSpellRight += I18n.format("primalarcane.text.none");
-		}
-		
-		tooltip.add(strSpellLeft);
-		tooltip.add(strSpellRight);
 	}
 	
     /**
@@ -110,16 +93,16 @@ public class ItemWand extends Item {
      * @param slot
      * @return The spell on the slot
      */
-	public Spell getWandSpell(ItemStack stack, WandSlot slot) {
+	public Spell getWandSpell(ItemStack stack, int slot) {
 		try {
-			String spellName = stack.getTagCompound().getString("WandSlot" + slot.toString());
+			String spellName = stack.getTagCompound().getString("WandSlot" + slot);
 			return SpellManager.getSpell(spellName);
 		} catch (Exception expt) {
 			return null;
 		}
 	}
 	
-	public void setWandSpell(ItemStack stack, WandSlot slot, Spell spell) {
+	public void setWandSpell(ItemStack stack, int slot, Spell spell) {
 		if(stack.isEmpty())
 			return;
 		
@@ -127,7 +110,7 @@ public class ItemWand extends Item {
 		if(compound == null)
 			compound = new NBTTagCompound();
 
-		compound.setString("WandSlot" + slot.toString(), spell.getSpellName());
+		compound.setString("WandSlot" + slot, spell.getSpellName());
 		stack.setTagCompound(compound);
 	}
 
@@ -138,7 +121,7 @@ public class ItemWand extends Item {
 	 * @param slot
 	 * @return Spell working interval
 	 */
-	protected int getSpellInterval(ItemStack stack, WandSlot slot) {
+	protected int getSpellInterval(ItemStack stack, int slot) {
 		Spell spell = getWandSpell(stack, slot);
 		if (spell != null) {
 			return spell.getSpellInterval();
@@ -161,5 +144,9 @@ public class ItemWand extends Item {
 		} catch (Exception expt) {
 		}
 		return value;
+	}
+	
+	protected int getSlotCount() {
+		return 2;
 	}
 }
