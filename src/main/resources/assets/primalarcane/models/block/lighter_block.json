@@ -1,6 +1,6 @@
 {
   "ambientocclusion": false,
   "textures": {
-    "particle": "mets:blocks/none"
+    "particle": "primalarcane:blocks/none"
   }
 }

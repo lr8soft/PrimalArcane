@@ -28,11 +28,11 @@ public class LightningSpell implements Spell {
         
         Vec3d target = result.hitVec;
         if(result.entityHit != null) {
-        	result.entityHit.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), 12.0f);
+        	result.entityHit.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), 25.0f);
         	target = new Vec3d(result.entityHit.posX, result.entityHit.posY, result.entityHit.posZ);
         }
         
-        worldIn.addWeatherEffect(new EntityLightningBolt(worldIn, target.x, target.y, target.z, false));
+        worldIn.addWeatherEffect(new EntityLightningBolt(worldIn, target.x, target.y - 0.5f, target.z, false));
         
         return true;
 	}

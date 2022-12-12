@@ -1,6 +1,6 @@
 {
   "variants": 
   {
-    "normal": { "model": "mets:lighter_block" }
+    "normal": { "model": "primalarcane:lighter_block" }
   }
 }

@@ -16,8 +16,6 @@ import net.minecraft.util.NonNullList;
 import scala.reflect.internal.Trees.This;
 
 public class TileEntityWandWorkBench extends TileEntity implements ITickable, IInventory{
-	public final int NEED_UPDATE_WAND_ID = 0;
-
     protected NonNullList<ItemStack> inventorySlotItemStack = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
 
 	@Override

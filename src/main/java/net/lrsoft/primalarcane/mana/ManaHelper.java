@@ -80,7 +80,7 @@ public class ManaHelper {
 	public static boolean canConsumeMana(World world, Chunk chunk, ManaType type, float cost) {
 		boolean result = false;
 		ChunkManaData data = ManaDataManager.getChunkManaData(chunk);
-		PrimalArcane.logger.info(data.positiveMana + " " + data.negativeMana + " " + cost);
+		//PrimalArcane.logger.info(data.positiveMana + " " + data.negativeMana + " " + cost);
 		switch(type) {
 		case POSITIVE:
 			return data.positiveMana - cost >= 0;

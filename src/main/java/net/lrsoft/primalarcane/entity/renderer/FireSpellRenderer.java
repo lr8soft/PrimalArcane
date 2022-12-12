@@ -35,6 +35,7 @@ public class FireSpellRenderer<T extends EntityShootSpell> extends Render<T>{
 	//From minecraft
 	public void doRender(T entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		this.bindEntityTexture(entity);
+
 		EntityPlayerSP viewer = (Minecraft.getMinecraft()).player;
 		float[] info = MathUtils.getPlayerView(viewer, partialTicks);
 		

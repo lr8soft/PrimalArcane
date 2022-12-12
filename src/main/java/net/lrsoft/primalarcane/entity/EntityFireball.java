@@ -16,6 +16,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityFireball extends EntityShootSpell {
 	private float power;
@@ -30,7 +32,9 @@ public class EntityFireball extends EntityShootSpell {
 	{
 		super(world, 250);
 		this.power = 3;
+		this.isImmuneToFire = true;
 	}
+
 	
 	private int getRandomFromRange(int max, int min)
 	{
@@ -88,7 +92,17 @@ public class EntityFireball extends EntityShootSpell {
 			
 		}
 	}
-	
+
+	@Override
+	public float getBrightness() {
+		return 1.0f;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public int getBrightnessForRender() {
+		return 15728880;
+	}
+
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound)
 	{

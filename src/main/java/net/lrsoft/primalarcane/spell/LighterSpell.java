@@ -17,7 +17,7 @@ public class LighterSpell implements Spell {
 
 	@Override
 	public boolean onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
-		/*Vec3d lookat = playerIn.getLookVec();
+		Vec3d lookat = playerIn.getLookVec();
 		
 		float blockReachDistance = 5.0f;
 		
@@ -27,20 +27,15 @@ public class LighterSpell implements Spell {
         
         RayTraceResult result = worldIn.rayTraceBlocks(vec3d, vec3d2, false, false, true);
         if(result == null)
-        	return;
+        	return false;
         
         Vec3d target = result.hitVec;
         
         BlockPos blockPos = new BlockPos(target);
-        blockPos = blockPos.add(0, 1, 0);
-        
+
         IBlockState state = worldIn.getBlockState(blockPos);
-        
-        ItemBlock.setTileEntityNBT(worldIn, playerIn, blockPos, stack);
-        BlockManager.lighterBlock.onBlockPlacedBy(worldIn, blockPos, state, playerIn, stack);
-        
-        if (playerIn instanceof EntityPlayerMP)
-        	CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)playerIn, blockPos, stack);*/
+		worldIn.setBlockState(blockPos, BlockManager.lighterBlock.getDefaultState());
+
 		return true;
 	}
 

@@ -30,15 +30,15 @@ public class GuiArcaneEnvironment extends Gui {
 
 		drawString(mc.fontRenderer, text, 30, 30, Integer.parseInt("FFFFFF", 16));
 
-		float xScale = 0.5f;
-		float yScale = 0.4f;
+		float xScale = 0.35f;//0.5f;
+		float yScale = 0.06f;//0.4f;
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(hudTexture);
 
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
 
-		float translateX = 15.0f;
+		float translateX = width / 2.0f + 10.0f;
 		float translateY = (height - yScale * texHeight) / 2.0f;
 		// render mana progress frame
 		{

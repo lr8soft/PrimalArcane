@@ -10,19 +10,15 @@ import net.lrsoft.primalarcane.gui.RenderGuiHandler;
 import net.lrsoft.primalarcane.network.NetworkHandler;
 import net.lrsoft.primalarcane.proxy.CommonProxy;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLConstructionEvent;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 @Mod(modid = PrimalArcane.MODID, name = PrimalArcane.NAME, version = PrimalArcane.VERSION)
@@ -60,13 +56,13 @@ public class PrimalArcane {
 		NetworkHandler.INSTANCE.initNetworkHandler();
 	}
 
-	public IThreadListener getThreadListener(MessageContext context) {
+	public IThreadListener getServerThreadListener(MessageContext context) {
 		if (context.side.isServer())
 			return context.getServerHandler().player.mcServer;
 		return null;
 	}
 
-	public EntityPlayer getPlayer(MessageContext context) {
+	public EntityPlayer getServerPlayer(MessageContext context) {
 		if (context.side.isServer())
 			return context.getServerHandler().player;
 		return null;

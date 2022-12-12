@@ -3,6 +3,7 @@ package net.lrsoft.primalarcane.network;
 import io.netty.buffer.ByteBuf;
 import net.lrsoft.primalarcane.mana.ManaDataManager;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 public class Message {
@@ -36,8 +37,6 @@ public class Message {
             this.data.positiveNegativeRatio = buf.readFloat();
             this.data.recoverySpeed = buf.readFloat();
         }
-
-
     }
 
     public static class MessageGuiButton implements IMessage {

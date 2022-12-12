@@ -4,13 +4,10 @@ import org.lwjgl.opengl.GL11;
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityLighterBlock;
 import net.lrsoft.primalarcane.util.MathUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
@@ -21,7 +18,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.client.model.animation.FastTESR;
 
 public class LighterRenderer extends TileEntitySpecialRenderer<TileEntityLighterBlock>{
 	private static final ResourceLocation texture_lighter =
@@ -30,7 +26,7 @@ public class LighterRenderer extends TileEntitySpecialRenderer<TileEntityLighter
 	@Override
 	public void render(TileEntityLighterBlock te, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		onRender(defaultColor, x, y, z, partialTicks);
+		onRender(te.getColor(), x, y, z, partialTicks);
 	}
 
 	
@@ -46,7 +42,7 @@ public class LighterRenderer extends TileEntitySpecialRenderer<TileEntityLighter
 		bindTexture(texture_lighter);
 		GlStateManager.pushMatrix();
         GlStateManager.translate((float)x + 0.5f, (float)y + 0.5f, (float)z + 0.5f);
-        //bindTexture(texture_lighter);
+
         RenderHelper.enableStandardItemLighting();
         GL11.glDepthMask(false);
        
