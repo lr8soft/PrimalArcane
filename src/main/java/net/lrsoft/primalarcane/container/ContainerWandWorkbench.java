@@ -7,7 +7,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerWandWorkbench extends Container {
+public class ContainerWandWorkbench extends Container implements IButtonHandler {
 	private TileEntityWandWorkBench tileEntity;
 	public ContainerWandWorkbench(InventoryPlayer inventory, TileEntityWandWorkBench te) {
 		tileEntity = te;
@@ -17,6 +17,7 @@ public class ContainerWandWorkbench extends Container {
 		addSlotToContainer(new SlotWithFilter(te, 0, 80, 42));
 		addSlotToContainer(new SlotWithFilter(te, 1, 51, 43));
 		addSlotToContainer(new SlotWithFilter(te, 2, 110, 43));
+
 		// backpack
         for (int row = 0; row < 3; ++row) {
             for (int column = 0; column < 9; ++column) {
@@ -35,8 +36,16 @@ public class ContainerWandWorkbench extends Container {
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return tileEntity.isUsableByPlayer(playerIn);
 	}
-	
-	
+
+
+	@Override
+	public void onButtonPress(int buttonId) {
+		// 更新手杖信息
+		if(buttonId == 0)
+			tileEntity.updateWand();
+	}
+
+
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer par1EntityPlayer, int index) {
 		// 0-2: Contain inventory
@@ -91,4 +100,5 @@ public class ContainerWandWorkbench extends Container {
 
 		return itemStack;
 	}
+
 }

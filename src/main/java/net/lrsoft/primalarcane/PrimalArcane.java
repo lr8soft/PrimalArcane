@@ -1,5 +1,8 @@
 package net.lrsoft.primalarcane;
 
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.IThreadListener;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -55,6 +58,18 @@ public class PrimalArcane {
 		proxy.postInit(event);
 		NetworkRegistry.INSTANCE.registerGuiHandler(Instance, new RenderGuiHandler());
 		NetworkHandler.INSTANCE.initNetworkHandler();
+	}
+
+	public IThreadListener getThreadListener(MessageContext context) {
+		if (context.side.isServer())
+			return context.getServerHandler().player.mcServer;
+		return null;
+	}
+
+	public EntityPlayer getPlayer(MessageContext context) {
+		if (context.side.isServer())
+			return context.getServerHandler().player;
+		return null;
 	}
 
 }

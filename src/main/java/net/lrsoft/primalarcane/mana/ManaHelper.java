@@ -2,9 +2,8 @@ package net.lrsoft.primalarcane.mana;
 
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.mana.ManaDataManager.ChunkManaData;
-import net.lrsoft.primalarcane.network.MessageMana;
 import net.lrsoft.primalarcane.network.NetworkHandler;
-import net.minecraft.entity.player.EntityPlayer;
+import net.lrsoft.primalarcane.network.Message.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;

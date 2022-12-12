@@ -1,6 +1,7 @@
 package net.lrsoft.primalarcane.network;
 
 import net.lrsoft.primalarcane.PrimalArcane;
+import net.lrsoft.primalarcane.network.Message.*;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -16,6 +17,7 @@ public enum NetworkHandler {
 	
 	public void initNetworkHandler() {
 	    this.channel.registerMessage(MessageHandler.MessageManaHandler.class, MessageMana.class, 0, Side.CLIENT);
+        this.channel.registerMessage(MessageHandler.MessageGuiButtonHandler.class, MessageGuiButton.class, 1, Side.SERVER);
 	}
 
     public void sendMessageToDim(IMessage msg, int dim) {

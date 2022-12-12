@@ -16,18 +16,15 @@ import net.minecraft.util.NonNullList;
 import scala.reflect.internal.Trees.This;
 
 public class TileEntityWandWorkBench extends TileEntity implements ITickable, IInventory{
+	public final int NEED_UPDATE_WAND_ID = 0;
 
     protected NonNullList<ItemStack> inventorySlotItemStack = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
-    
-    protected boolean needUpdateSpell = true;
-	
+
 	@Override
-	public void update() {
+	public void update() {}
+
+	public void updateWand() {
 		if(this.world.isRemote)
-			return;
-		
-		// slot update = need update wand data
-		if(!needUpdateSpell)
 			return;
 
 		ItemStack wandStack = getStackInSlot(0);
@@ -43,23 +40,16 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
 		ItemWand wand = (ItemWand)wandStack.getItem();
 		ItemSpell spell0 = getSpellItem(spellStack0);
 		ItemSpell spell1 = getSpellItem(spellStack1);
-		
-		boolean haveUpdate = false;
+
 		// write spell the wand
 		if(spell0 != null) {
 			wand.setWandSpell(wandStack, 0, spell0.getSpell());
-			haveUpdate = true;
 		}
-		
+
 		if(spell1 != null) {
 			wand.setWandSpell(wandStack, 1, spell1.getSpell());
-			haveUpdate = true;
 		}
-		
-		if(haveUpdate) {
-			needUpdateSpell = false;
-			this.markDirty();
-		}
+
 		
 	}
 	
@@ -129,7 +119,6 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
             stack.setCount(this.getInventoryStackLimit());
         }
         this.markDirty();
-        needUpdateSpell = true;
 	}
 
 	@Override
@@ -197,7 +186,6 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
 	
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		// TODO Auto-generated method stub
 		super.readFromNBT(compound);
         this.inventorySlotItemStack = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
         ItemStackHelper.loadAllItems(compound, this.inventorySlotItemStack);
@@ -206,7 +194,6 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         ItemStackHelper.saveAllItems(compound, this.inventorySlotItemStack);
 		return super.writeToNBT(compound);
-		
 	}
-	
+
 }
