@@ -37,7 +37,6 @@ import scala.reflect.api.Trees.NewApi;
 @Mod.EventBusSubscriber(modid = PrimalArcane.MODID)
 public class BlockManager {
 	public static List<BlockUniformTemplate> modBlockList = new ArrayList<>();
-	
 	public static BlockUniformTemplate wandWorkBench;
 	public static BlockUniformTemplate lighterBlock;
 	

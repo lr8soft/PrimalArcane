@@ -43,11 +43,6 @@ public class LightningSpell implements Spell {
 	}
 
 	@Override
-	public ManaType getConsumeManaType() {
-		return ManaType.NEGATIVE;
-	}
-
-	@Override
 	public float getSpellCost() {
 		// TODO Auto-generated method stub
 		return 200;

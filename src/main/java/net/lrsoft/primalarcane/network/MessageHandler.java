@@ -3,7 +3,6 @@ package net.lrsoft.primalarcane.network;
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.container.IButtonHandler;
 import net.lrsoft.primalarcane.network.Message.*;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -14,7 +13,7 @@ public class MessageHandler {
 	public static class MessageManaHandler implements IMessageHandler<MessageMana, IMessage> {
 		@Override
 		public IMessage onMessage(MessageMana message, MessageContext ctx) {
-			net.lrsoft.primalarcane.gui.GuiArcaneEnvironment.updateManaInfo(message.data.positiveMana, message.data.negativeMana, message.data.maxMana);
+			net.lrsoft.primalarcane.gui.GuiArcaneEnvironment.updateManaInfo(message.data.mana, message.data.maxMana);
 			return null;
 		}
 	}

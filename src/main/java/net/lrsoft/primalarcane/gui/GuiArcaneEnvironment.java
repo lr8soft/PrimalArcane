@@ -17,8 +17,7 @@ public class GuiArcaneEnvironment extends Gui {
 	private static final int texWidth = 160, texHeight = 160;
 	String text = "PrimalArcane INDEV";
 
-	static float postiveMana = 0.0f;
-	static float negativeMana = 0.0f;
+	static float currentMana = 0.0f;
 	static float maxMana = 0.0f;
 
 	public GuiArcaneEnvironment(Minecraft mc) {
@@ -51,7 +50,7 @@ public class GuiArcaneEnvironment extends Gui {
 		}
 		// render postive mana
 		{
-			float postiveRate = postiveMana / maxMana;
+			float postiveRate = currentMana / maxMana;
 			int postiveTexHeight = Math.round(postiveRate * (float) texWidth);
 
 			GlStateManager.pushMatrix();
@@ -64,7 +63,7 @@ public class GuiArcaneEnvironment extends Gui {
 
 			GlStateManager.popMatrix();
 		}
-
+		/*
 		// render negative mana
 		{
 			float negativeRate = negativeMana / maxMana;
@@ -79,7 +78,7 @@ public class GuiArcaneEnvironment extends Gui {
 
 			GlStateManager.popMatrix();
 		}
-
+		*/
 	}
 
 	public static void drawModalRectWithCustomSizedTextureReverb(int x, int y, float u, float v, int width, int height,
@@ -96,9 +95,8 @@ public class GuiArcaneEnvironment extends Gui {
 		tessellator.draw();
 	}
 
-	public static void updateManaInfo(float p, float n, float max) {
-		postiveMana = p;
-		negativeMana = n;
+	public static void updateManaInfo(float current, float max) {
+		currentMana = current;
 		maxMana = max;
 	}
 }

@@ -45,11 +45,6 @@ public class LighterSpell implements Spell {
 	}
 
 	@Override
-	public ManaType getConsumeManaType() {
-		return ManaType.POSITIVE;
-	}
-
-	@Override
 	public float getSpellCost() {
 		return 50.0f;
 	}

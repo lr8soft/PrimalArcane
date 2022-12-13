@@ -44,8 +44,4 @@ public class FireballSpell implements Spell {
 		return "spell_fireball";
 	}
 
-	@Override
-	public ManaType getConsumeManaType() {
-		return ManaType.POSITIVE;
-	}
 }

@@ -37,14 +37,12 @@ public class GuiWandWorkbench extends GuiContainer {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
-
 	}
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		this.fontRenderer.drawString(I18n.format("primalarcane.text.wand_workbench"), 60, 6, Integer.parseInt("000000", 16));
-
 	}
 
 	@Override

@@ -1,34 +1,15 @@
 package net.lrsoft.primalarcane.mana;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Map.Entry;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
-import net.lrsoft.primalarcane.PrimalArcane;
-import net.lrsoft.primalarcane.util.MathUtils;
-import net.lrsoft.primalarcane.util.Noise;
 import net.lrsoft.primalarcane.util.Noise.NoiseGenerator;
-import net.minecraft.init.Biomes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
-import net.minecraft.world.storage.MapStorage;
-import net.minecraft.world.storage.WorldSavedData;
 
-public class ManaDataManager {
-
+public class ChunkManaManager {
 	private static NoiseGenerator generator = new NoiseGenerator();
 	
 	// <dimId, <chunkPos, data>>
@@ -73,9 +54,9 @@ public class ManaDataManager {
 		int dimensionId = chunk.getWorld().provider.getDimension();
 		
 		HashMap<ChunkPos, ChunkManaData> chunksData = chunkManaData.getOrDefault(dimensionId, null);
-		// new dimension have not init
+		// 未初始化的新维度
 		if(chunksData == null) {
-			// init chunk
+			// 初始化区块
 			ChunkManaData data = initChunkManaData(chunk);
 			setChunkManaData(chunk, data);
 			return data;
@@ -83,9 +64,9 @@ public class ManaDataManager {
 		
 		ChunkPos pos = chunk.getPos();
 		ChunkManaData storageData = chunksData.getOrDefault(pos, null);
-		// chunk have not load
+		// 区块未加载
 		if(storageData == null) {
-			// init chunk
+			// 初始化区块
 			storageData = initChunkManaData(chunk);
 			chunksData.put(chunk.getPos(), storageData);
 		}
@@ -97,7 +78,7 @@ public class ManaDataManager {
 		int dimensionId = chunk.getWorld().provider.getDimension();
 		
 		HashMap<ChunkPos, ChunkManaData> chunksData = chunkManaData.getOrDefault(dimensionId, null);
-		// no dimension data
+		// 没有维度信息
 		if(chunksData == null) {
 			return false;
 		}
@@ -115,41 +96,31 @@ public class ManaDataManager {
 	
 	public static ChunkManaData initChunkManaData(Chunk chunk) {
 		ChunkManaData data = new ChunkManaData();
-		
-		// calc biome mana ratio
-		float totalRate = 0.0f;
+
+		// 计算区块mana恢复速率
 		float recoveryRate = 0.0f;
 		byte[] biomes = chunk.getBiomeArray();
 		float biomeCount = biomes.length;
 		for(int i = 0; i < biomeCount; i++) {
 			Biome biome = Biome.getBiome(biomes[i]);
-			totalRate += BiomeMana.getBiomeManaPNRate(biome);
 			recoveryRate += BiomeMana.getBiomeManaRecoverySpeed(biome);
 		}
-		data.positiveNegativeRatio = totalRate / biomeCount;
-		data.recoverySpeed = 15.0f * (recoveryRate / biomeCount);
+		data.recoverySpeed = 30.0f * (recoveryRate / biomeCount);
 		
 		ChunkPos pos = chunk.getPos();
 		data.maxMana = generator.generateHeight(pos.x, pos.z);
-		
-		data.positiveMana = data.positiveNegativeRatio * data.maxMana;
-		data.negativeMana = data.maxMana - data.positiveMana;
-		
+		data.mana = data.maxMana;
 		data.lastUpdateTime = chunk.getWorld().getTotalWorldTime();
-		
-		//this.setChunkManaData(data, chunk.getPos());
 		return data;
 	}
 
 	private static ChunkManaData readFromNBT(NBTTagCompound compound) {
-		if(!compound.hasKey("maxMana") || !compound.hasKey("positiveNegativeRatio") || !compound.hasKey("recoverySpeed"))
+		if(!compound.hasKey("maxMana") || !compound.hasKey("recoverySpeed"))
 			return null;
 		
 		ChunkManaData data = new ChunkManaData();
-		data.positiveMana = compound.getFloat("positiveMana");
-		data.negativeMana = compound.getFloat("negativeMana");
+		data.mana = compound.getFloat("mana");
 		data.maxMana = compound.getFloat("maxMana");
-		data.positiveNegativeRatio = compound.getFloat("positiveNegativeRatio");
 		data.recoverySpeed = compound.getFloat("recoverySpeed");
 		data.lastUpdateTime = compound.getLong("lastUpdateTime");
 		return data;
@@ -160,10 +131,8 @@ public class ManaDataManager {
 		if(data == null)
 			return compound;
 		
-		compound.setFloat("positiveMana", data.positiveMana);
-		compound.setFloat("negativeMana", data.negativeMana);
+		compound.setFloat("mana", data.mana);
 		compound.setFloat("maxMana", data.maxMana);
-		compound.setFloat("positiveNegativeRatio", data.positiveNegativeRatio);
 		compound.setFloat("recoverySpeed", data.recoverySpeed);
 		compound.setLong("lastUpdateTime", data.lastUpdateTime);
 		
@@ -171,10 +140,8 @@ public class ManaDataManager {
 	}
 	
 	public static class ChunkManaData implements Serializable {
-		public float positiveMana;
-		public float negativeMana;
+		public float mana;
 		public float maxMana;
-		public float positiveNegativeRatio;
 		public float recoverySpeed;
 		public long lastUpdateTime;
 	}
