@@ -13,10 +13,8 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiArcaneEnvironment extends Gui {
-	private static ResourceLocation hudTexture = new ResourceLocation(PrimalArcane.MODID, "textures/gui/hud.png");
-	private static final int texWidth = 384, texHeight = 384;
-	private static final float designWidth = 640f, designHeight = 480f;
-
+	private static ResourceLocation hudTexture = new ResourceLocation(PrimalArcane.MODID, "textures/gui/new_hud.png");
+	private static final int texWidth = 160, texHeight = 160;
 	String text = "PrimalArcane INDEV";
 
 	static float postiveMana = 0.0f;
@@ -30,8 +28,8 @@ public class GuiArcaneEnvironment extends Gui {
 
 		drawString(mc.fontRenderer, text, 30, 30, Integer.parseInt("FFFFFF", 16));
 
-		float xScale = 0.35f;//0.5f;
-		float yScale = 0.06f;//0.4f;
+		float xScale = 0.20f;//0.35f
+		float yScale = 0.15f;//0.06f
 		GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 		mc.renderEngine.bindTexture(hudTexture);
 
@@ -39,7 +37,7 @@ public class GuiArcaneEnvironment extends Gui {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
 
 		float thirdViewOffset = Minecraft.getMinecraft().gameSettings.thirdPersonView > 0 ? 10.0f : 0.0f;
-		
+
 		float translateX = width / 2.0f + 10.0f + thirdViewOffset;
 		float translateY = (height - yScale * texHeight) / 2.0f;
 		// render mana progress frame
