@@ -44,8 +44,6 @@ public class ModelManager {
 			ModelLoader.setCustomModelResourceLocation(item, 0,
 					new ModelResourceLocation(item.getRegistryName(), "inventory"));
 		}
-		// ItemManager.electricShield.setTileEntityItemStackRenderer(new
-		// net.lrsoft.mets.renderer.NanoShieldRenderer());
 	}
 
 	@SubscribeEvent

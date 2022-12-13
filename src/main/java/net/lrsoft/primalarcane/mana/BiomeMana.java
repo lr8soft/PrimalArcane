@@ -10,39 +10,39 @@ public class BiomeMana {
 	private static HashMap<Biome, Float> biomeManaRecoverySpeed = new HashMap<>();
 	static {
 		// postive-negative mana rate
-		addBiomeManaPNRate(Biomes.BIRCH_FOREST_HILLS, 0.6f);
-		addBiomeManaPNRate(Biomes.COLD_BEACH, 0.3f);
-		addBiomeManaPNRate(Biomes.COLD_TAIGA, 0.3f);
-		addBiomeManaPNRate(Biomes.COLD_TAIGA_HILLS, 0.25f);
-		addBiomeManaPNRate(Biomes.DEEP_OCEAN, 0.1f);
-		addBiomeManaPNRate(Biomes.DEFAULT, 0.6f);
-		addBiomeManaPNRate(Biomes.DESERT, 0.8f);
-		addBiomeManaPNRate(Biomes.DESERT_HILLS, 0.85f);
-		addBiomeManaPNRate(Biomes.EXTREME_HILLS, 0.6f);
-		addBiomeManaPNRate(Biomes.EXTREME_HILLS_EDGE, 0.6f);
-		addBiomeManaPNRate(Biomes.EXTREME_HILLS_WITH_TREES, 0.6f);
-		addBiomeManaPNRate(Biomes.FOREST_HILLS, 0.6f);
-		addBiomeManaPNRate(Biomes.FROZEN_OCEAN, 0.2f);
-		addBiomeManaPNRate(Biomes.FROZEN_RIVER, 0.2f);
-		addBiomeManaPNRate(Biomes.HELL, 1.0f);
-		addBiomeManaPNRate(Biomes.ICE_MOUNTAINS, 0.2f);
-		addBiomeManaPNRate(Biomes.ICE_PLAINS, 0.2f);
-		addBiomeManaPNRate(Biomes.JUNGLE_EDGE, 0.6f);
-		addBiomeManaPNRate(Biomes.JUNGLE_HILLS, 0.6f);
-		addBiomeManaPNRate(Biomes.MESA, 0.8f);
-		addBiomeManaPNRate(Biomes.MESA_CLEAR_ROCK, 0.8f);
-		addBiomeManaPNRate(Biomes.MESA_ROCK, 0.8f);
-		addBiomeManaPNRate(Biomes.MUTATED_BIRCH_FOREST_HILLS, 0.6f);
-		addBiomeManaPNRate(Biomes.MUTATED_EXTREME_HILLS_WITH_TREES, 0.6f);
-		addBiomeManaPNRate(Biomes.MUTATED_ICE_FLATS, 0.2f);
-		addBiomeManaPNRate(Biomes.MUTATED_MESA, 0.8f);
-		addBiomeManaPNRate(Biomes.MUTATED_MESA_CLEAR_ROCK, 0.8f);
-		addBiomeManaPNRate(Biomes.MUTATED_MESA_ROCK, 0.8f);
-		addBiomeManaPNRate(Biomes.OCEAN, 0.1f);
-		addBiomeManaPNRate(Biomes.RIVER, 0.3f);
-		addBiomeManaPNRate(Biomes.REDWOOD_TAIGA_HILLS, 0.6f);
-		addBiomeManaPNRate(Biomes.ROOFED_FOREST, 0.5f);
-		addBiomeManaPNRate(Biomes.VOID, 0.0f);
+		addBiomeManaMultiple(Biomes.BIRCH_FOREST_HILLS, 0.6f);
+		addBiomeManaMultiple(Biomes.COLD_BEACH, 0.3f);
+		addBiomeManaMultiple(Biomes.COLD_TAIGA, 0.3f);
+		addBiomeManaMultiple(Biomes.COLD_TAIGA_HILLS, 0.25f);
+		addBiomeManaMultiple(Biomes.DEEP_OCEAN, 0.1f);
+		addBiomeManaMultiple(Biomes.DEFAULT, 0.6f);
+		addBiomeManaMultiple(Biomes.DESERT, 0.8f);
+		addBiomeManaMultiple(Biomes.DESERT_HILLS, 0.85f);
+		addBiomeManaMultiple(Biomes.EXTREME_HILLS, 0.6f);
+		addBiomeManaMultiple(Biomes.EXTREME_HILLS_EDGE, 0.6f);
+		addBiomeManaMultiple(Biomes.EXTREME_HILLS_WITH_TREES, 0.6f);
+		addBiomeManaMultiple(Biomes.FOREST_HILLS, 0.6f);
+		addBiomeManaMultiple(Biomes.FROZEN_OCEAN, 0.2f);
+		addBiomeManaMultiple(Biomes.FROZEN_RIVER, 0.2f);
+		addBiomeManaMultiple(Biomes.HELL, 1.0f);
+		addBiomeManaMultiple(Biomes.ICE_MOUNTAINS, 0.2f);
+		addBiomeManaMultiple(Biomes.ICE_PLAINS, 0.2f);
+		addBiomeManaMultiple(Biomes.JUNGLE_EDGE, 0.6f);
+		addBiomeManaMultiple(Biomes.JUNGLE_HILLS, 0.6f);
+		addBiomeManaMultiple(Biomes.MESA, 0.8f);
+		addBiomeManaMultiple(Biomes.MESA_CLEAR_ROCK, 0.8f);
+		addBiomeManaMultiple(Biomes.MESA_ROCK, 0.8f);
+		addBiomeManaMultiple(Biomes.MUTATED_BIRCH_FOREST_HILLS, 0.6f);
+		addBiomeManaMultiple(Biomes.MUTATED_EXTREME_HILLS_WITH_TREES, 0.6f);
+		addBiomeManaMultiple(Biomes.MUTATED_ICE_FLATS, 0.2f);
+		addBiomeManaMultiple(Biomes.MUTATED_MESA, 0.8f);
+		addBiomeManaMultiple(Biomes.MUTATED_MESA_CLEAR_ROCK, 0.8f);
+		addBiomeManaMultiple(Biomes.MUTATED_MESA_ROCK, 0.8f);
+		addBiomeManaMultiple(Biomes.OCEAN, 0.1f);
+		addBiomeManaMultiple(Biomes.RIVER, 0.3f);
+		addBiomeManaMultiple(Biomes.REDWOOD_TAIGA_HILLS, 0.6f);
+		addBiomeManaMultiple(Biomes.ROOFED_FOREST, 0.5f);
+		addBiomeManaMultiple(Biomes.VOID, 0.0f);
 		
 		// mana recovery speed
 		addBiomeManaRecoverySpeed(Biomes.VOID, 10.0f);
@@ -59,7 +59,7 @@ public class BiomeMana {
 		addBiomeManaRecoverySpeed(Biomes.ROOFED_FOREST, 5.0f);
 	}
 	
-	public static void addBiomeManaPNRate(Biome biome, float positiveNegativeRatio) {
+	public static void addBiomeManaMultiple(Biome biome, float positiveNegativeRatio) {
 		biomeManaPNRate.put(biome, positiveNegativeRatio);
 	}
 	

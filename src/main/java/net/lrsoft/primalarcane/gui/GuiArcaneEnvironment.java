@@ -38,7 +38,9 @@ public class GuiArcaneEnvironment extends Gui {
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_CLAMP);
 		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_CLAMP);
 
-		float translateX = width / 2.0f + 10.0f;
+		float thirdViewOffset = Minecraft.getMinecraft().gameSettings.thirdPersonView > 0 ? 10.0f : 0.0f;
+		
+		float translateX = width / 2.0f + 10.0f + thirdViewOffset;
 		float translateY = (height - yScale * texHeight) / 2.0f;
 		// render mana progress frame
 		{

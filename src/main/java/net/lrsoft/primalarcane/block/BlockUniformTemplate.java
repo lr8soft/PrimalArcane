@@ -46,8 +46,7 @@ public class BlockUniformTemplate extends Block implements ITileEntityProvider{
 		}
 		return null;
 	}
-	
-	
+
 	public Class<? extends TileEntity> getTileEntityClazz(){
 		return clazz;
 	}

@@ -64,7 +64,9 @@ public class BlockManager {
 	public static void onCommonBlockItemInit(RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		for(BlockUniformTemplate block : modBlockList) {
-			registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+			if(block.getNeedItemBlock()) {
+				registry.register(new ItemBlock(block).setRegistryName(block.getRegistryName()));
+			}
 		}
 	}
 	

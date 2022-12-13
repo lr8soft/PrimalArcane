@@ -15,7 +15,7 @@ public class TileEntityLighterBlock extends TileEntity implements ITickable{
     private boolean newLighter = true;
     @Override
     public void update() {
-        // 客户端更新
+        // 只有客户端更新
         if(!world.isRemote) return;
 
         // 新亮点初始化
