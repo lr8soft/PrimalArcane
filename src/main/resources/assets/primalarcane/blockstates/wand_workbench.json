@@ -1,6 +1,10 @@
 {
   "variants": 
   {
-    "normal": { "model": "primalarcane:wand_workbench" }
+    "normal": { "model": "primalarcane:wand_workbench"},
+    "facing=south": { "model": "primalarcane:wand_workbench"},
+    "facing=north": { "model": "primalarcane:wand_workbench", "y": 180 },
+    "facing=west":  { "model": "primalarcane:wand_workbench", "y": 90  },
+    "facing=east":  { "model": "primalarcane:wand_workbench", "y": 270 }
   }
 }
