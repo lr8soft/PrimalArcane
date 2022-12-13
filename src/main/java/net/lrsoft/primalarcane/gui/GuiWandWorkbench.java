@@ -17,10 +17,8 @@ import java.io.IOException;
 
 public class GuiWandWorkbench extends GuiContainer {
 	private static ResourceLocation backgroundTex = new ResourceLocation(PrimalArcane.MODID, "textures/gui/work_bench.png");
-	
 	private TileEntityWandWorkBench tileEntity;
 	private InventoryPlayer playerInventory;
-
 	private GuiButton submitButton;
 
 	private final int SUBMIT_BUTTON_ID = 0;
@@ -29,7 +27,6 @@ public class GuiWandWorkbench extends GuiContainer {
 		super(new ContainerWandWorkbench(inventory, te));
 		tileEntity = te;
 		playerInventory = inventory;
-
 	}
 	
 	@Override
@@ -37,14 +34,12 @@ public class GuiWandWorkbench extends GuiContainer {
         this.drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
         this.renderHoveredToolTip(mouseX, mouseY);
-
 	}
 	
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		this.fontRenderer.drawString(I18n.format("primalarcane.text.wand_workbench"), 60, 6, Integer.parseInt("000000", 16));
-
 	}
 
 	@Override
@@ -52,8 +47,8 @@ public class GuiWandWorkbench extends GuiContainer {
 		super.initGui();
 		int baseX =  (this.width - this.xSize) / 2;
 		int baseY = (this.height - this.ySize) / 2;
-		// submit button
-		this.addButton(new GuiButton(0,baseX + 130, baseY + 43, 20, 20, "✔"));
+		// 确认按钮
+		this.addButton(new GuiButton(0,baseX + 130, baseY + 43, 20, 20, I18n.format("primalarcane.text.submit")));
 	}
 
 	@Override

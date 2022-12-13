@@ -1,5 +1,5 @@
 ﻿
-itemGroup.primalarcaneTabs=元始奥术
+itemGroup.primalarcaneTabs=[PAE]根源奥术
 
 tile.primalarcane.block.wand_workbench.name=法杖装配台
 
@@ -9,6 +9,8 @@ item.primalarcane.spell.spell_fireball.name=火球术
 item.primalarcane.spell.spell_lightning.name=雷击术
 item.primalarcane.spell.spell_lighter.name=照明术
 
+primalarcane.text.currentspell=当前法术
 primalarcane.text.spell=法术
 primalarcane.text.none=无
+primalarcane.text.submit=✔
 primalarcane.text.wand_workbench=法杖工作台

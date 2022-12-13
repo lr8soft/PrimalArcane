@@ -18,6 +18,7 @@ public enum NetworkHandler {
 	public void initNetworkHandler() {
 	    this.channel.registerMessage(MessageHandler.MessageManaHandler.class, MessageMana.class, 0, Side.CLIENT);
         this.channel.registerMessage(MessageHandler.MessageGuiButtonHandler.class, MessageGuiButton.class, 1, Side.SERVER);
+        this.channel.registerMessage(MessageHandler.MessageScrollChangeSpellHandler.class, MessageScrollChangeSpell.class, 2, Side.SERVER);
 	}
 
     public void sendMessageToDim(IMessage msg, int dim) {

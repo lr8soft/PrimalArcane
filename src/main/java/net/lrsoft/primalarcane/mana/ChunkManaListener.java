@@ -5,11 +5,9 @@ import java.util.List;
 
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.ChunkEvent;
-import net.minecraftforge.event.world.ChunkWatchEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.WorldTickEvent;
@@ -50,7 +48,7 @@ public class ChunkManaListener {
 
         Chunk chunk = event.getChunk();
 		activeChunks.add(chunk);
-        ManaDataManager.loadDataFromChunk(chunk, event.getData());
+        ChunkManaManager.loadDataFromChunk(chunk, event.getData());
         
 
     }
@@ -62,7 +60,7 @@ public class ChunkManaListener {
         
         Chunk chunk = event.getChunk();
 		activeChunks.remove(chunk);
-        ManaDataManager.removeChunkData(chunk);
+        ChunkManaManager.removeChunkData(chunk);
     }
 	
 	
@@ -71,6 +69,6 @@ public class ChunkManaListener {
         if(event.getWorld().isRemote)
             return;
         
-        ManaDataManager.writeDataToChunk(event.getChunk(), event.getData());
+        ChunkManaManager.writeDataToChunk(event.getChunk(), event.getData());
     }
 }

@@ -3,16 +3,14 @@ package net.lrsoft.primalarcane.manager;
 import java.util.Map.Entry;
 
 import net.lrsoft.primalarcane.PrimalArcane;
-import net.lrsoft.primalarcane.block.BlockUniformTemplate;
+import net.lrsoft.primalarcane.block.BlockMachineTemplate;
+import net.lrsoft.primalarcane.block.BlockUniform;
 import net.lrsoft.primalarcane.block.renderer.LighterRenderer;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityLighterBlock;
 import net.lrsoft.primalarcane.entity.EntityFireball;
-import net.lrsoft.primalarcane.entity.EntityShootSpell;
 import net.lrsoft.primalarcane.entity.renderer.FireSpellRenderer;
 import net.lrsoft.primalarcane.item.ItemSpell;
-import net.lrsoft.primalarcane.spell.Spell;
 import net.lrsoft.primalarcane.spell.SpellManager;
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
@@ -24,16 +22,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = PrimalArcane.MODID)
@@ -57,7 +52,7 @@ public class ModelManager {
 
 	@SubscribeEvent
 	public static void onBlockModelInit(ModelRegistryEvent event) {
-		for (BlockUniformTemplate block : BlockManager.modBlockList) {
+		for (BlockUniform block : BlockManager.modBlockList) {
 			if(block.getNeedItemBlock()) {
 				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
 						new ModelResourceLocation(block.getRegistryName(), "normal"));
