@@ -3,7 +3,6 @@ package net.lrsoft.primalarcane.block.tileentity;
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.item.ItemSpell;
 import net.lrsoft.primalarcane.item.ItemWand;
-import net.lrsoft.primalarcane.manager.ItemManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
@@ -13,7 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
-import scala.reflect.internal.Trees.This;
 
 public class TileEntityWandWorkBench extends TileEntity implements ITickable, IInventory{
     protected NonNullList<ItemStack> inventorySlotItemStack = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
@@ -41,11 +39,11 @@ public class TileEntityWandWorkBench extends TileEntity implements ITickable, II
 
 		// write spell the wand
 		if(spell0 != null) {
-			wand.setWandSpell(wandStack, 0, spell0.getSpell());
+			wand.setSlotSpell(wandStack, 0, spell0.getSpell());
 		}
 
 		if(spell1 != null) {
-			wand.setWandSpell(wandStack, 1, spell1.getSpell());
+			wand.setSlotSpell(wandStack, 1, spell1.getSpell());
 		}
 
 		
