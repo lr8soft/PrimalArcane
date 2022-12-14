@@ -216,6 +216,16 @@
 			}
 		}
 	],
+	"display": {
+		"gui": {
+			"rotation": [18, 29, 0],
+			"scale": [0.8, 0.8, 0.8]
+		},
+		"fixed": {
+			"rotation": [-17, 180, 0],
+			"translation": [0, 1.25, -2.5]
+		}
+	},
 	"groups": [
 		{
 			"name": "slot",

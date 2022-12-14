@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.item.ItemWand;
+import net.lrsoft.primalarcane.item.armor.ItemManaArmor;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -25,9 +26,14 @@ public class ItemManager {
 	public static ArrayList<Item> modItemList = new ArrayList<>();
 	public static ItemWand wand;
 
+	public static ItemManaArmor mana_chest;
+
 	static {
 		wand = new ItemWand("normal_wand");
 		modItemList.add(wand);
+
+		mana_chest = new ItemManaArmor("mana_chest", EntityEquipmentSlot.CHEST);
+		modItemList.add(mana_chest);
 	}
 
 	@SubscribeEvent
