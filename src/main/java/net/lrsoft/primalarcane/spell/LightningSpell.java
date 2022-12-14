@@ -14,8 +14,6 @@ public class LightningSpell implements Spell {
 
 	@Override
 	public boolean onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
-		Vec3d lookat = playerIn.getLookVec();
-		
 		float blockReachDistance = 15.0f;
 		
         Vec3d vec3d = playerIn.getPositionEyes(1.0f);

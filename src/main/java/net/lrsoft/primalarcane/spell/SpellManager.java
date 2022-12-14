@@ -16,7 +16,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod.EventBusSubscriber(modid = PrimalArcane.MODID)
 public class SpellManager {
-	private static Map<String, Spell> spellDict = new HashMap<String, Spell>();
+	public static Map<String, Spell> spellDict = new HashMap<String, Spell>();
 	private static Map<String, ItemSpell> spellItemDict = new HashMap<>();
 
 	public static class SpellRegistryEvent extends Event {
