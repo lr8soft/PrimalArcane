@@ -4,16 +4,12 @@ import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.item.armor.model.ModelManaArmorChest;
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
-import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.util.EnumHelper;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ItemManaArmor extends ItemArmor {
@@ -39,14 +35,17 @@ public class ItemManaArmor extends ItemArmor {
             {
                 //使用我们刚刚的模型
                 ModelManaArmorChest model = new ModelManaArmorChest();
-                //模型应用在胸甲上armorSlot.CHEST，其他的分别是HEAD(头盔),LEGS(护腿),FEET(靴子)
-                model.Root.showModel = armorSlot == armorSlot.CHEST;
+                if(armorSlot == armorSlot.CHEST) {
+                    model.bipedBody.showModel = true;
+                    model.bipedLeftArm.showModel = true;
+                    model.bipedRightArm.showModel = true;
+                }
 
                 model.leftArmPose = _default.leftArmPose;
                 model.rightArmPose = _default.rightArmPose;
-                model.isChild = _default.isChild;
-                model.isRiding= _default.isRiding;
-                model.isSneak = _default.isSneak;
+                model.isChild = entityLiving.isChild();
+                model.isRiding= entityLiving.isRiding();
+                model.isSneak = entityLiving.isSneaking();
 
 
                 return model;
