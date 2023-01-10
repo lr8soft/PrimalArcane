@@ -2,12 +2,16 @@ package net.lrsoft.primalarcane.spell;
 
 import net.lrsoft.primalarcane.mana.ManaHelper.ManaType;
 import net.lrsoft.primalarcane.manager.BlockManager;
+import net.lrsoft.primalarcane.util.BlockUtils;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.BlockAir;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -17,8 +21,6 @@ public class LighterSpell implements Spell {
 
 	@Override
 	public boolean onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
-		Vec3d lookat = playerIn.getLookVec();
-		
 		float blockReachDistance = 5.0f;
 		
         Vec3d vec3d = playerIn.getPositionEyes(1.0f);
@@ -28,14 +30,15 @@ public class LighterSpell implements Spell {
         RayTraceResult result = worldIn.rayTraceBlocks(vec3d, vec3d2, false, false, true);
         if(result == null)
         	return false;
-        
-        Vec3d target = result.hitVec;
-        
-        BlockPos blockPos = new BlockPos(target);
+
+		BlockPos blockPos = new BlockPos(result.hitVec);
+		blockPos = BlockUtils.getPlaceablePos(blockPos, playerIn);
 
         IBlockState state = worldIn.getBlockState(blockPos);
-		worldIn.setBlockState(blockPos, BlockManager.lighterBlock.getDefaultState());
+		if(state != Blocks.AIR.getDefaultState())
+			return false;
 
+		worldIn.setBlockState(blockPos, BlockManager.lighterBlock.getDefaultState());
 		return true;
 	}
 
