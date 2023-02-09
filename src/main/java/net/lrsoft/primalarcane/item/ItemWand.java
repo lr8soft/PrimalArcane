@@ -31,8 +31,8 @@ public class ItemWand extends Item {
 
 	public void doWandSpell(World worldIn, EntityPlayer player, ItemStack stack, int slot) {
 		// 仅限服务器端
-		if (worldIn.isRemote)
-			return;
+		//if (worldIn.isRemote)
+		//	return;
 		
 		BlockPos pos = new BlockPos(player);
 		Chunk chunk = worldIn.getChunkFromBlockCoords(pos);

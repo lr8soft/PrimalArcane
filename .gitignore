@@ -24,3 +24,4 @@ run
 forge*changelog.txt
 PrimalArcane_Client.launch
 PrimalArcane_Server.launch
+*.launch

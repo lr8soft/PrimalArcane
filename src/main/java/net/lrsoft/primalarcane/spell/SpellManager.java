@@ -16,7 +16,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 @Mod.EventBusSubscriber(modid = PrimalArcane.MODID)
 public class SpellManager {
-	public static Map<String, Spell> spellDict = new HashMap<String, Spell>();
+	public static Map<String, Spell> spellDict = new HashMap<>();
 	private static Map<String, ItemSpell> spellItemDict = new HashMap<>();
 
 	public static class SpellRegistryEvent extends Event {
@@ -30,15 +30,18 @@ public class SpellManager {
 	public static Spell fireball;
 	public static Spell lightning;
 	public static Spell lighter;
+	public static Spell flying;
 
 	static {
 		fireball = new FireballSpell();
 		lightning = new LightningSpell();
 		lighter = new LighterSpell();
+		flying = new FlyingSpell();
 		
 		addSpell(fireball);
 		addSpell(lightning);
 		addSpell(lighter);
+		addSpell(flying);
 	}
 
 	public static Spell getSpell(String spellName) {

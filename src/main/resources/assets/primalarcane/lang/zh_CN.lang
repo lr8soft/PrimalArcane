@@ -8,6 +8,7 @@ item.primalarcane.wand.normal_wand.name=法杖
 item.primalarcane.spell.spell_fireball.name=火球术
 item.primalarcane.spell.spell_lightning.name=雷击术
 item.primalarcane.spell.spell_lighter.name=照明术
+item.primalarcane.spell.spell_flying.name=飞行术
 
 primalarcane.text.currentspell=当前法术
 primalarcane.text.spell=法术
