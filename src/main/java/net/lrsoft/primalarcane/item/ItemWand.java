@@ -46,21 +46,6 @@ public class ItemWand extends Item {
 			}
 		}
 	}
-	
-	@Override
-	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
-		// 客户端检测切换法术动作
-		if(worldIn.isRemote) {
-			Item currentItem = stack.getItem();
-			if(!isSelected) return;
-			if(!(entityIn instanceof EntityPlayer)) return;
-
-			if(currentItem instanceof ItemWand) {
-
-			}
-		}
-	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

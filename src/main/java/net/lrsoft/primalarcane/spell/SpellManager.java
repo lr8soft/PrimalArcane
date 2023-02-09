@@ -21,7 +21,6 @@ public class SpellManager {
 
 	public static class SpellRegistryEvent extends Event {
 		public final Map<String, ItemSpell> spellDict;
-
 		public SpellRegistryEvent(Map<String, ItemSpell> dict) {
 			spellDict = dict;
 		}
