@@ -1,7 +1,5 @@
 package net.lrsoft.primalarcane.spell;
 
-import net.lrsoft.primalarcane.PrimalArcane;
-import net.lrsoft.primalarcane.mana.ManaHelper.ManaType;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

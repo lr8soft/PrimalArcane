@@ -36,7 +36,7 @@ public class ChunkManaListener {
         List<EntityPlayerMP> players = event.world.getPlayers(EntityPlayerMP.class, (p) -> true);
         for(EntityPlayerMP player : players) {
         	Chunk playerChunk = event.world.getChunkFromBlockCoords(player.getPosition());
-        	ManaHelper.sendManaDataToClient(event.world, playerChunk, player);
+        	ManaHelper.sendManaDataToClient(playerChunk, player);
         	ManaHelper.updateChunkMana(playerChunk);
         }
 	}

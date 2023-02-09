@@ -7,6 +7,7 @@ import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.block.BlockLighter;
 import net.lrsoft.primalarcane.block.BlockMachineTemplate;
 import net.lrsoft.primalarcane.block.BlockUniform;
+import net.lrsoft.primalarcane.block.tileentity.TileEntityManaFurnace;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityWandWorkBench;
 import net.lrsoft.primalarcane.gui.RenderGuiHandler;
 import net.minecraft.block.Block;
@@ -23,12 +24,16 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class BlockManager {
 	public static List<BlockUniform> modBlockList = new ArrayList<>();
 	public static BlockUniform wandWorkBench;
+	public static BlockUniform manaFurnace;
 	public static BlockUniform lighterBlock;
 	
 	static {
 		wandWorkBench = new BlockMachineTemplate(Material.IRON, "wand_workbench", TileEntityWandWorkBench.class, RenderGuiHandler.WAND_WORKBENCH_ID);
 		modBlockList.add(wandWorkBench);
-		
+
+		manaFurnace = new BlockMachineTemplate(Material.IRON, "mana_furnace", TileEntityManaFurnace.class, RenderGuiHandler.MANA_FUNRACE_ID);
+		modBlockList.add(manaFurnace);
+
 		lighterBlock = new BlockLighter();
 		modBlockList.add(lighterBlock);
 	}

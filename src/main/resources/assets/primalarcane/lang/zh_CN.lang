@@ -2,6 +2,7 @@
 itemGroup.primalarcaneTabs=[PAE]根源奥术
 
 tile.primalarcane.block.wand_workbench.name=法杖装配台
+tile.primalarcane.block.mana_furnace.name=魔力熔炉
 
 item.primalarcane.wand.normal_wand.name=法杖
 

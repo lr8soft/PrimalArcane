@@ -4,15 +4,9 @@ import net.lrsoft.primalarcane.mana.ChunkManaManager.ChunkManaData;
 import net.lrsoft.primalarcane.network.NetworkHandler;
 import net.lrsoft.primalarcane.network.Message.*;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 
 public class ManaHelper {
-
-    public enum ManaType {
-        POSITIVE, NEGATIVE, BOTH
-    }
-
     public static void updateChunkMana(Chunk chunk) {
         ChunkManaData data = ChunkManaManager.getChunkManaData(chunk);
         // 按照秒为单位计算
@@ -51,12 +45,12 @@ public class ManaHelper {
         }
     }
 
-    public static boolean canConsumeMana(World world, Chunk chunk, float cost) {
+    public static boolean canConsumeMana(Chunk chunk, float cost) {
         ChunkManaData data = ChunkManaManager.getChunkManaData(chunk);
         return data.mana - cost >= 0;
     }
 
-    public static boolean consumeMana(World world, Chunk chunk, float cost) {
+    public static boolean consumeMana(Chunk chunk, float cost) {
         boolean result = false;
         ChunkManaData data = ChunkManaManager.getChunkManaData(chunk);
 
@@ -69,7 +63,7 @@ public class ManaHelper {
         return false;
     }
 
-    public static void sendManaDataToClient(World world, Chunk chunk, EntityPlayerMP player) {
+    public static void sendManaDataToClient(Chunk chunk, EntityPlayerMP player) {
         ChunkManaData data = ChunkManaManager.getChunkManaData(chunk);
         NetworkHandler.INSTANCE.sendMessageToPlayer(new MessageMana(data), player);
     }

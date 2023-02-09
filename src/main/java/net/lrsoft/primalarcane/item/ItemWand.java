@@ -39,9 +39,9 @@ public class ItemWand extends Item {
 		
 		Spell spell = getSlotSpell(stack, slot);
 		if (spell != null) {
-			if(ManaHelper.canConsumeMana(worldIn, chunk, spell.getSpellCost())){
+			if(ManaHelper.canConsumeMana(chunk, spell.getSpellCost())){
 				if(spell.onSpell(worldIn, player, stack)) {
-					ManaHelper.consumeMana(worldIn, chunk, spell.getSpellCost());
+					ManaHelper.consumeMana(chunk, spell.getSpellCost());
 				}
 			}
 		}
