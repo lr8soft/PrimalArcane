@@ -61,18 +61,6 @@ public class ModelManager {
 	}
 
 	@SubscribeEvent
-	public static void onRenderingEntityModel(RenderPlayerEvent.Post event) {
-		EntityPlayer player = event.getEntityPlayer();
-		ItemStack chestStack = player.inventory.armorInventory.get(EntityEquipmentSlot.CHEST.getIndex());
-		if(chestStack != ItemStack.EMPTY) {
-			if(chestStack.getItem() instanceof ItemManaArmor) {
-				ModelPlayer modelPlayer = event.getRenderer().getMainModel();
-				modelPlayer.bipedBody.showModel = false;
-			}
-		}
-	}
-
-	@SubscribeEvent
 	public static void onItemModelInit(ModelRegistryEvent event) {
 		for (Item item : ItemManager.modItemList) {
 			ModelLoader.setCustomModelResourceLocation(item, 0,
