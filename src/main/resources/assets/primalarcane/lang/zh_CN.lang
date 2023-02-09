@@ -2,12 +2,14 @@
 itemGroup.primalarcaneTabs=[PAE]根源奥术
 
 tile.primalarcane.block.wand_workbench.name=法杖装配台
+tile.primalarcane.block.mana_furnace.name=魔力熔炉
 
 item.primalarcane.wand.normal_wand.name=法杖
 
 item.primalarcane.spell.spell_fireball.name=火球术
 item.primalarcane.spell.spell_lightning.name=雷击术
 item.primalarcane.spell.spell_lighter.name=照明术
+item.primalarcane.spell.spell_flying.name=飞行术
 
 primalarcane.text.currentspell=当前法术
 primalarcane.text.spell=法术

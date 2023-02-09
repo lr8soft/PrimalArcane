@@ -20,6 +20,7 @@ public class MessageHandler {
 		}
 	}
 
+	// server receive
 	public static class MessageGuiButtonHandler implements IMessageHandler<MessageGuiButton, IMessage>{
 		@Override
 		public IMessage onMessage(MessageGuiButton message, MessageContext ctx) {
@@ -36,6 +37,7 @@ public class MessageHandler {
 		}
 	}
 
+	// server receive
 	public static class MessageScrollChangeSpellHandler implements IMessageHandler<MessageScrollChangeSpell, IMessage>{
 		@Override
 		public IMessage onMessage(MessageScrollChangeSpell message, MessageContext ctx) {

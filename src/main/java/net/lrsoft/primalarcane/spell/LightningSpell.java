@@ -1,7 +1,5 @@
 package net.lrsoft.primalarcane.spell;
 
-import net.lrsoft.primalarcane.PrimalArcane;
-import net.lrsoft.primalarcane.mana.ManaHelper.ManaType;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,8 +12,6 @@ public class LightningSpell implements Spell {
 
 	@Override
 	public boolean onSpell(World worldIn, EntityPlayer playerIn, ItemStack stack) {
-		Vec3d lookat = playerIn.getLookVec();
-		
 		float blockReachDistance = 15.0f;
 		
         Vec3d vec3d = playerIn.getPositionEyes(1.0f);

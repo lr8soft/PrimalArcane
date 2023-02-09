@@ -1,6 +1,5 @@
 package net.lrsoft.primalarcane.spell;
 
-import net.lrsoft.primalarcane.mana.ManaHelper.ManaType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;

@@ -2,6 +2,7 @@ package net.lrsoft.primalarcane.gui;
 
 import net.lrsoft.primalarcane.network.NetworkHandler;
 import net.lrsoft.primalarcane.network.Message.*;
+import net.minecraft.client.gui.FontRenderer;
 import org.lwjgl.opengl.GL11;
 
 import net.lrsoft.primalarcane.PrimalArcane;
@@ -39,7 +40,9 @@ public class GuiWandWorkbench extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		this.fontRenderer.drawString(I18n.format("primalarcane.text.wand_workbench"), 60, 6, Integer.parseInt("000000", 16));
+
+		String info = I18n.format("primalarcane.text.wand_workbench");
+		this.fontRenderer.drawString(info, 110 - fontRenderer.getStringWidth(info), 6, Integer.parseInt("000000", 16));
 	}
 
 	@Override

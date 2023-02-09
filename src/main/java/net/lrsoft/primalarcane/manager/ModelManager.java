@@ -10,17 +10,23 @@ import net.lrsoft.primalarcane.block.tileentity.TileEntityLighterBlock;
 import net.lrsoft.primalarcane.entity.EntityFireball;
 import net.lrsoft.primalarcane.entity.renderer.FireSpellRenderer;
 import net.lrsoft.primalarcane.item.ItemSpell;
+import net.lrsoft.primalarcane.item.armor.ItemManaArmor;
 import net.lrsoft.primalarcane.spell.SpellManager;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.model.ModelPlayer;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderEntity;
 import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
@@ -33,6 +39,39 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = PrimalArcane.MODID)
 public class ModelManager {
+	@SubscribeEvent
+	public static void onBlockModelInit(ModelRegistryEvent event) {
+		for (BlockUniform block : BlockManager.modBlockList) {
+			if(block.getNeedItemBlock()) {
+				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
+						new ModelResourceLocation(block.getRegistryName(), "normal"));
+			}
+		}
+		
+		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLighterBlock.class, new LighterRenderer());
+	}
+	@SubscribeEvent
+	public static void onEntityModelInit(ModelRegistryEvent event) {
+		RenderingRegistry.registerEntityRenderingHandler(EntityFireball.class, new IRenderFactory<EntityFireball>() {
+			public Render<EntityFireball> createRenderFor(RenderManager manager) {
+				return (Render<EntityFireball>) new FireSpellRenderer(manager,
+						new ResourceLocation(PrimalArcane.MODID, "textures/entity/fireball.png"));
+			}
+		});
+	}
+
+	@SubscribeEvent
+	public static void onRenderingEntityModel(RenderPlayerEvent.Post event) {
+		EntityPlayer player = event.getEntityPlayer();
+		ItemStack chestStack = player.inventory.armorInventory.get(EntityEquipmentSlot.CHEST.getIndex());
+		if(chestStack != ItemStack.EMPTY) {
+			if(chestStack.getItem() instanceof ItemManaArmor) {
+				ModelPlayer modelPlayer = event.getRenderer().getMainModel();
+				modelPlayer.bipedBody.showModel = false;
+			}
+		}
+	}
+
 	@SubscribeEvent
 	public static void onItemModelInit(ModelRegistryEvent event) {
 		for (Item item : ItemManager.modItemList) {
@@ -48,28 +87,6 @@ public class ModelManager {
 			ModelLoader.setCustomModelResourceLocation(item, 0,
 					new ModelResourceLocation(PrimalArcane.MODID + ":spell", "inventory"));
 		}
-	}
-
-	@SubscribeEvent
-	public static void onBlockModelInit(ModelRegistryEvent event) {
-		for (BlockUniform block : BlockManager.modBlockList) {
-			if(block.getNeedItemBlock()) {
-				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
-						new ModelResourceLocation(block.getRegistryName(), "normal"));
-			}
-		}
-		
-		ClientRegistry.bindTileEntitySpecialRenderer(TileEntityLighterBlock.class, new LighterRenderer());
-	}
-
-	@SubscribeEvent
-	public static void onEntityModelInit(ModelRegistryEvent event) {
-		RenderingRegistry.registerEntityRenderingHandler(EntityFireball.class, new IRenderFactory<EntityFireball>() {
-			public Render<EntityFireball> createRenderFor(RenderManager manager) {
-				return (Render<EntityFireball>) new FireSpellRenderer(manager,
-						new ResourceLocation(PrimalArcane.MODID, "textures/entity/fireball.png"));
-			}
-		});
 	}
 
 	private static final ResourceLocation fluidLocation = new ResourceLocation(PrimalArcane.MODID, "fluid");

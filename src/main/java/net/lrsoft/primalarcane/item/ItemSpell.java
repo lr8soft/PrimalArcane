@@ -9,11 +9,9 @@ public class ItemSpell extends Item {
 	public ItemSpell(Spell spell) {
 		this.spell = spell;
 	}
-	
 	public Spell getSpell() {
 		return spell;
 	}
-	
 	@Override
 	public boolean hasEffect(ItemStack stack) {
 		return true;
