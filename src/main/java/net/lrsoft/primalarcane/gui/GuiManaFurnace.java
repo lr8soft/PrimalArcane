@@ -4,6 +4,7 @@ import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityManaFurnace;
 import net.lrsoft.primalarcane.container.ContainerManaFurnace;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -39,9 +40,22 @@ public class GuiManaFurnace  extends GuiContainer {
             this.mc.renderEngine.bindTexture(errorTex);
         }
 
-        int x = (this.width - this.xSize) / 2;
-        int y = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
+        GlStateManager.pushMatrix();
+        {
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+            float renderSize = 0.5f;
+            int imageWidth = 26;
+            int x = (this.xSize - imageWidth) / 2 - imageWidth;
+            int y = (this.height - imageWidth) / 2 - imageWidth;
+
+            //GlStateManager.translate(x, y, this.zLevel);
+            GlStateManager.scale(renderSize, renderSize, renderSize);
+
+            this.drawModalRectWithCustomSizedTexture(x, y, 0, 0, imageWidth, imageWidth, imageWidth, imageWidth);
+
+        }
+        GlStateManager.popMatrix();
     }
 
 

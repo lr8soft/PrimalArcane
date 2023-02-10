@@ -2,17 +2,15 @@ package net.lrsoft.primalarcane.block.tileentity;
 
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.mana.ManaHelper;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.util.ITickable;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.chunk.Chunk;
+
+import javax.annotation.Nullable;
 
 public class TileEntityManaFurnace extends TileEntityWithContainer implements ITickable {
     protected final float consumeMana = 2.0f;
@@ -50,23 +48,20 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
                 return;
         }
 
-        PrimalArcane.logger.info("working" + this.cookTime + " " + this.totalCookTime);
-
         if(ManaHelper.consumeMana(chunk, consumeMana)) {
             this.cookTime += 1;
             // 煮好了
             if(this.cookTime >= this.totalCookTime) {
                 sourceSlot.shrink(1);
                 if(targetSlot.isEmpty()) {
-                    setInventorySlotContents(1, result);
+                    setInventorySlotContents(1, result.copy());
                 }else{
                     targetSlot.setCount(targetSlot.getCount() + 1);
                 }
                 this.cookTime = 0;
             }
-            this.markDirty();
+            this.notifyUpdateToClient();
         }
-
     }
 
     @Override
@@ -124,13 +119,4 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
     public int getTotalCookTime() {
         return this.totalCookTime;
     }
-
-    @Override
-    public int getField(int id) { return 0; }
-
-    @Override
-    public void setField(int id, int value) {}
-
-    @Override
-    public int getFieldCount() { return 0; }
 }

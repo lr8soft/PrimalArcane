@@ -1,13 +1,19 @@
 package net.lrsoft.primalarcane.block.tileentity;
 
+import net.lrsoft.primalarcane.PrimalArcane;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+
+import javax.annotation.Nullable;
 
 public abstract class TileEntityWithContainer extends TileEntity implements IInventory {
     private int containerSize = 0;
@@ -95,4 +101,41 @@ public abstract class TileEntityWithContainer extends TileEntity implements IInv
         ItemStackHelper.saveAllItems(compound, this.inventorySlotItemStack);
         return super.writeToNBT(compound);
     }
+
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(this.getPos(), 1, this.getUpdateTag());
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
+        this.readFromNBT(pkt.getNbtCompound());
+    }
+
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        return this.writeToNBT(super.getUpdateTag());
+    }
+
+    @Override
+    public void handleUpdateTag(NBTTagCompound tag) {
+        this.readFromNBT(tag);
+    }
+
+    public void notifyUpdateToClient() {
+        IBlockState state = world.getBlockState(pos);
+        world.notifyBlockUpdate(pos, state, state, 3);
+        world.scheduleBlockUpdate(pos, this.getBlockType(),0,0);
+        this.markDirty();
+    }
+
+    @Override
+    public int getField(int id) { return 0; }
+
+    @Override
+    public void setField(int id, int value) {}
+
+    @Override
+    public int getFieldCount() { return 0; }
 }
