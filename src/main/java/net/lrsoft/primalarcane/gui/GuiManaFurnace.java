@@ -69,15 +69,20 @@ public class GuiManaFurnace  extends GuiContainer {
             this.drawTexturedModalRect(x + xOffset, y + yOffset, imageStartX, imageStartY, renderWidth, imageHeight);
         }
 
-        // 能工作显示蓝色的info图标
+
         {
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            // 能工作显示蓝色的info图标
             int imageStartX = this.xSize;
             int imageStartY = 0;
             int imageWidth = 22, imageHeight = 21;
 
             int xOffset = 15;
             int yOffset = 40;
+
+            // 不能工作就显示红色error
+            if(!tileEntity.getCanWork())
+                imageStartX += imageWidth;
 
             this.drawTexturedModalRect(x + xOffset, y + yOffset, imageStartX, imageStartY, imageWidth, imageHeight);
         }
