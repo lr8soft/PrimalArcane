@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 
 public class BlockMachineTemplate extends BlockUniform {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
-
 	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz) {
 		this(materialIn, blockName, clazz, -1);
 	}
@@ -26,16 +25,12 @@ public class BlockMachineTemplate extends BlockUniform {
 		super(materialIn, blockName, clazz, gui);
 	}
 
-
-
 	@Override
 	public void onBlockAdded(World worldIn, BlockPos pos, IBlockState state) {
 		this.setDefaultFacing(worldIn, pos, state);
 	}
-	private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state)
-	{
-		if (!worldIn.isRemote)
-		{
+	private void setDefaultFacing(World worldIn, BlockPos pos, IBlockState state) {
+		if (!worldIn.isRemote) {
 			IBlockState iblockstate = worldIn.getBlockState(pos.north());
 			IBlockState iblockstate1 = worldIn.getBlockState(pos.south());
 			IBlockState iblockstate2 = worldIn.getBlockState(pos.west());
@@ -70,12 +65,10 @@ public class BlockMachineTemplate extends BlockUniform {
 	/**
 	 * Convert the given metadata into a BlockState for this Block
 	 */
-	public IBlockState getStateFromMeta(int meta)
-	{
+	public IBlockState getStateFromMeta(int meta) {
 		EnumFacing enumfacing = EnumFacing.getFront(meta);
 
-		if (enumfacing.getAxis() == EnumFacing.Axis.Y)
-		{
+		if (enumfacing.getAxis() == EnumFacing.Axis.Y) {
 			enumfacing = EnumFacing.NORTH;
 		}
 
@@ -94,8 +87,7 @@ public class BlockMachineTemplate extends BlockUniform {
 	 * Returns the blockstate with the given rotation from the passed blockstate. If inapplicable, returns the passed
 	 * blockstate.
 	 */
-	public IBlockState withRotation(IBlockState state, Rotation rot)
-	{
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
 		return state.withProperty(FACING, rot.rotate((EnumFacing)state.getValue(FACING)));
 	}
 
@@ -103,8 +95,7 @@ public class BlockMachineTemplate extends BlockUniform {
 	 * Returns the blockstate with the given mirror of the passed blockstate. If inapplicable, returns the passed
 	 * blockstate.
 	 */
-	public IBlockState withMirror(IBlockState state, Mirror mirrorIn)
-	{
+	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
 		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
 	}
 
@@ -112,6 +103,4 @@ public class BlockMachineTemplate extends BlockUniform {
 	{
 		return new BlockStateContainer(this, new IProperty[] {FACING});
 	}
-
-
 }

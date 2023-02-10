@@ -20,8 +20,6 @@ public class GuiWandWorkbench extends GuiContainer {
 	private static ResourceLocation backgroundTex = new ResourceLocation(PrimalArcane.MODID, "textures/gui/work_bench.png");
 	private TileEntityWandWorkBench tileEntity;
 	private InventoryPlayer playerInventory;
-	private GuiButton submitButton;
-
 	private final int SUBMIT_BUTTON_ID = 0;
 
 	public GuiWandWorkbench(InventoryPlayer inventory, TileEntityWandWorkBench te) {
