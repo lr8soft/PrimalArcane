@@ -12,6 +12,7 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiManaFurnace  extends GuiContainer {
     private static ResourceLocation backgroundTex = new ResourceLocation(PrimalArcane.MODID, "textures/gui/mana_furnace.png");
+    private static ResourceLocation arrowTex = new ResourceLocation(PrimalArcane.MODID, "textures/icons/arrow.png");
     private static ResourceLocation infoTex = new ResourceLocation(PrimalArcane.MODID, "textures/icons/info.png");
     private static ResourceLocation errorTex = new ResourceLocation(PrimalArcane.MODID, "textures/icons/error.png");
     private TileEntityManaFurnace tileEntity;
@@ -26,14 +27,35 @@ public class GuiManaFurnace  extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-
+        // 渲染ui标题
         String info = I18n.format("primalarcane.text.mana_furnace");
         this.fontRenderer.drawString(info, 110 - fontRenderer.getStringWidth(info), 6, Integer.parseInt("000000", 16));
 
+        /*
         String progress = I18n.format("primalarcane.text.progress");
         progress += " " + tileEntity.getCookTime() + "/" + tileEntity.getTotalCookTime();
         this.fontRenderer.drawString(progress, 70 - fontRenderer.getStringWidth(info), 66, Integer.parseInt("000000", 16));
+        */
+        // 渲染进度条
+        this.mc.renderEngine.bindTexture(arrowTex);
+        GlStateManager.pushMatrix();
+        {
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
 
+            float renderSize = 1.0f;
+            int imageWidth = 25, imageHeight = 17;
+            int x = (this.xSize - imageWidth) / 2 + imageWidth;
+            int y = (this.height - imageHeight) / 2 - ;
+
+            GlStateManager.scale(renderSize, renderSize, renderSize);
+
+            float renderRate= (float)tileEntity.getCookTime() / (float)tileEntity.getTotalCookTime();
+            int renderWidth = Math.round(imageWidth * renderRate);
+            this.drawModalRectWithCustomSizedTexture(x, y, 0, 0, renderWidth, imageHeight, imageWidth, imageHeight);
+        }
+        GlStateManager.popMatrix();
+
+        // 能工作显示蓝色的info图标
         if(tileEntity.getCanWork()) {
             this.mc.renderEngine.bindTexture(infoTex);
         }else{
@@ -48,16 +70,12 @@ public class GuiManaFurnace  extends GuiContainer {
             int imageWidth = 26;
             int x = (this.xSize - imageWidth) / 2 - imageWidth;
             int y = (this.height - imageWidth) / 2 - imageWidth;
-
-            //GlStateManager.translate(x, y, this.zLevel);
             GlStateManager.scale(renderSize, renderSize, renderSize);
-
             this.drawModalRectWithCustomSizedTexture(x, y, 0, 0, imageWidth, imageWidth, imageWidth, imageWidth);
 
         }
         GlStateManager.popMatrix();
     }
-
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
