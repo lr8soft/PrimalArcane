@@ -27,39 +27,52 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
         if(this.world.isRemote)
             return;
 
-        ItemStack sourceSlot = getStackInSlot(0);
-        ItemStack targetSlot = getStackInSlot(1);
+        boolean needUpdate = false;
+        do{
+            ItemStack sourceSlot = getStackInSlot(0);
+            ItemStack targetSlot = getStackInSlot(1);
 
-        Chunk chunk = this.world.getChunkFromBlockCoords(this.getPos());
-        // 是否有足够魔力工作
-        canWork = ManaHelper.canConsumeMana(chunk, consumeMana);
-        if(!canWork) return;
-
-        // 检测输入是否为空，输出满了没有
-        if(sourceSlot.isEmpty()) return;
-        if(targetSlot.getCount() == targetSlot.getMaxStackSize()) return;
-
-        // 检测输入物品是否有输出
-        ItemStack result = FurnaceRecipes.instance().getSmeltingResult(sourceSlot);
-        if(result.isEmpty()) return;
-        // 如果已有输出物品 检测是否与结果一致
-        if(!targetSlot.isEmpty()) {
-            if(targetSlot.getItem() != result.getItem())
-                return;
-        }
-
-        if(ManaHelper.consumeMana(chunk, consumeMana)) {
-            this.cookTime += 1;
-            // 煮好了
-            if(this.cookTime >= this.totalCookTime) {
-                sourceSlot.shrink(1);
-                if(targetSlot.isEmpty()) {
-                    setInventorySlotContents(1, result.copy());
-                }else{
-                    targetSlot.setCount(targetSlot.getCount() + 1);
-                }
-                this.cookTime = 0;
+            Chunk chunk = this.world.getChunkFromBlockCoords(this.getPos());
+            // 是否有足够魔力工作
+            boolean newCanWork = ManaHelper.canConsumeMana(chunk, consumeMana);
+            if(newCanWork != canWork) {
+                needUpdate = true;
             }
+            canWork = newCanWork;
+            if(!canWork) break;
+
+            // 检测输入是否为空，输出满了没有
+            if(sourceSlot.isEmpty()) break;
+            if(targetSlot.getCount() == targetSlot.getMaxStackSize()) break;
+
+            // 检测输入物品是否有输出
+            ItemStack result = FurnaceRecipes.instance().getSmeltingResult(sourceSlot);
+            if(result.isEmpty()) break;
+            // 如果已有输出物品 检测是否与结果一致
+            if(!targetSlot.isEmpty()) {
+                if(targetSlot.getItem() != result.getItem())
+                    break;
+            }
+
+            if(ManaHelper.consumeMana(chunk, consumeMana)) {
+                this.cookTime += 1;
+                // 煮好了
+                if(this.cookTime >= this.totalCookTime) {
+                    sourceSlot.shrink(1);
+                    if(targetSlot.isEmpty()) {
+                        setInventorySlotContents(1, result.copy());
+                    }else{
+                        targetSlot.setCount(targetSlot.getCount() + 1);
+                    }
+                    this.cookTime = 0;
+                }
+                needUpdate = true;
+            }
+
+        }while(false);
+
+        // 更新客户端tileentity的nbt
+        if(needUpdate) {
             this.notifyUpdateToClient();
         }
     }
