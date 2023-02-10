@@ -3,6 +3,7 @@ package net.lrsoft.primalarcane.gui;
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityManaFurnace;
 import net.lrsoft.primalarcane.container.ContainerManaFurnace;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -12,9 +13,6 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiManaFurnace  extends GuiContainer {
     private static ResourceLocation backgroundTex = new ResourceLocation(PrimalArcane.MODID, "textures/gui/mana_furnace.png");
-    private static ResourceLocation arrowTex = new ResourceLocation(PrimalArcane.MODID, "textures/icons/arrow.png");
-    private static ResourceLocation infoTex = new ResourceLocation(PrimalArcane.MODID, "textures/icons/info.png");
-    private static ResourceLocation errorTex = new ResourceLocation(PrimalArcane.MODID, "textures/icons/error.png");
     private TileEntityManaFurnace tileEntity;
     private InventoryPlayer playerInventory;
 
@@ -36,53 +34,56 @@ public class GuiManaFurnace  extends GuiContainer {
         progress += " " + tileEntity.getCookTime() + "/" + tileEntity.getTotalCookTime();
         this.fontRenderer.drawString(progress, 70 - fontRenderer.getStringWidth(info), 66, Integer.parseInt("000000", 16));
         */
-        // 渲染进度条
-        this.mc.renderEngine.bindTexture(arrowTex);
-        GlStateManager.pushMatrix();
-        {
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-
-            float renderSize = 1.0f;
-            int imageWidth = 25, imageHeight = 17;
-            int x = (this.xSize - imageWidth) / 2 + imageWidth;
-            int y = (this.height - imageHeight) / 2 - ;
-
-            GlStateManager.scale(renderSize, renderSize, renderSize);
-
-            float renderRate= (float)tileEntity.getCookTime() / (float)tileEntity.getTotalCookTime();
-            int renderWidth = Math.round(imageWidth * renderRate);
-            this.drawModalRectWithCustomSizedTexture(x, y, 0, 0, renderWidth, imageHeight, imageWidth, imageHeight);
-        }
-        GlStateManager.popMatrix();
-
-        // 能工作显示蓝色的info图标
-        if(tileEntity.getCanWork()) {
-            this.mc.renderEngine.bindTexture(infoTex);
-        }else{
-            this.mc.renderEngine.bindTexture(errorTex);
-        }
-
-        GlStateManager.pushMatrix();
-        {
-            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-
-            float renderSize = 0.5f;
-            int imageWidth = 26;
-            int x = (this.xSize - imageWidth) / 2 - imageWidth;
-            int y = (this.height - imageWidth) / 2 - imageWidth;
-            GlStateManager.scale(renderSize, renderSize, renderSize);
-            this.drawModalRectWithCustomSizedTexture(x, y, 0, 0, imageWidth, imageWidth, imageWidth, imageWidth);
-
-        }
-        GlStateManager.popMatrix();
     }
 
     @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        this.mc.renderEngine.bindTexture(backgroundTex);
+
         int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
+        // 渲染大背景图
+        {
+            this.mc.renderEngine.bindTexture(backgroundTex);
+            this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
+        }
+
+
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+
+        // 渲染进度条
+        this.mc.renderEngine.bindTexture(backgroundTex);
+        {
+            // 这图像就在xsize=176右边开始
+            int imageStartX = this.xSize;
+            // 上面塞了高icon=26的icon
+            int imageStartY = 26;
+            // 这破箭头宽22像素高16像素
+            int imageWidth = 22, imageHeight = 16;
+            int renderWidth = getCookingProgressScale(imageWidth);
+
+            // 把我整无语了还是一点点测的
+            int xOffset = 80;
+            int yOffset = 42;
+
+            this.drawTexturedModalRect(x + xOffset, y + yOffset, imageStartX, imageStartY, renderWidth, imageHeight);
+        }
+
+        // 能工作显示蓝色的info图标
+        {
+            GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+            int imageStartX = this.xSize;
+            int imageStartY = 0;
+            int imageWidth = 22, imageHeight = 21;
+
+            int xOffset = 15;
+            int yOffset = 40;
+
+            this.drawTexturedModalRect(x + xOffset, y + yOffset, imageStartX, imageStartY, imageWidth, imageHeight);
+        }
+    }
+
+    private int getCookingProgressScale(int pixels) {
+        return tileEntity.getCookTime() * pixels / tileEntity.getTotalCookTime();
     }
 }

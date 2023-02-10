@@ -14,8 +14,8 @@ public class ContainerManaFurnace extends Container{
     public ContainerManaFurnace(InventoryPlayer inventory, TileEntityManaFurnace te) {
         tileEntity = te;
 
-        addSlotToContainer(new SlotWithFilter(te, 0, 51, 43));
-        addSlotToContainer(new SlotWithFilter(te, 1, 110, 43));
+        addSlotToContainer(new SlotWithFilter(te, 0, 54, 41));
+        addSlotToContainer(new SlotWithFilter(te, 1, 113, 41));
 
         // 背包
         for (int row = 0; row < 3; ++row) {
