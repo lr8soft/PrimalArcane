@@ -15,9 +15,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.chunk.Chunk;
 
 public class TileEntityManaFurnace extends TileEntityWithContainer implements ITickable {
-    protected final float consumeMana = 10.0f;
+    protected final float consumeMana = 2.0f;
     private int cookTime = 0;
-    private int totalCookTime = 100;
+    private int totalCookTime = 50;
+    private boolean canWork = false;
 
     public TileEntityManaFurnace() {
         super(2);
@@ -30,6 +31,12 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
 
         ItemStack sourceSlot = getStackInSlot(0);
         ItemStack targetSlot = getStackInSlot(1);
+
+        Chunk chunk = this.world.getChunkFromBlockCoords(this.getPos());
+        // 是否有足够魔力工作
+        canWork = ManaHelper.canConsumeMana(chunk, consumeMana);
+        if(!canWork) return;
+
         // 检测输入是否为空，输出满了没有
         if(sourceSlot.isEmpty()) return;
         if(targetSlot.getCount() == targetSlot.getMaxStackSize()) return;
@@ -43,17 +50,19 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
                 return;
         }
 
-        Chunk chunk = this.world.getChunkFromBlockCoords(this.getPos());
+        PrimalArcane.logger.info("working" + this.cookTime + " " + this.totalCookTime);
+
         if(ManaHelper.consumeMana(chunk, consumeMana)) {
             this.cookTime += 1;
             // 煮好了
-            if(this.cookTime == this.totalCookTime) {
+            if(this.cookTime >= this.totalCookTime) {
                 sourceSlot.shrink(1);
                 if(targetSlot.isEmpty()) {
                     setInventorySlotContents(1, result);
                 }else{
-                    targetSlot.grow(1);
+                    targetSlot.setCount(targetSlot.getCount() + 1);
                 }
+                this.cookTime = 0;
             }
             this.markDirty();
         }
@@ -87,18 +96,33 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
         if(index == 0) {
             this.cookTime = 0;
         }
+        this.markDirty();
     }
 
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         this.cookTime = compound.getInteger("cookTime");
+        this.canWork = compound.getBoolean("canWork");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setInteger("cookTime", this.cookTime);
+        compound.setBoolean("canWork", this.canWork);
         return super.writeToNBT(compound);
+    }
+
+    public boolean getCanWork() {
+        return this.canWork;
+    }
+
+    public int getCookTime() {
+        return this.cookTime;
+    }
+
+    public int getTotalCookTime() {
+        return this.totalCookTime;
     }
 
     @Override

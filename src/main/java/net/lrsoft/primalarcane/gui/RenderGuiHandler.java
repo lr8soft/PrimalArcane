@@ -53,13 +53,13 @@ public class RenderGuiHandler implements IGuiHandler{
 		switch (ID) {
 			case WAND_WORKBENCH_ID: {
 				if (te instanceof TileEntityWandWorkBench) {
-					return new GuiWandWorkbench(player.inventory, (TileEntityWandWorkBench) te);
+					return new GuiWandWorkbench(player.inventory, (TileEntityWandWorkBench)te);
 				}
 				break;
 			}
 			case MANA_FUNRACE_ID: {
 				if (te instanceof TileEntityManaFurnace) {
-					;
+					return new GuiManaFurnace(player.inventory, (TileEntityManaFurnace)te);
 				}
 				break;
 			}
