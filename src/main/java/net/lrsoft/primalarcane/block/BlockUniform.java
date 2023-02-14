@@ -16,15 +16,18 @@ public class BlockUniform extends BlockContainer {
     private Class<? extends TileEntity> clazz;
     private int guiId;
     private boolean needItemBlock = true;
+    private String blockName;
 
     public BlockUniform(Material materialIn, String blockName, Class<? extends TileEntity> clazz) {
         this(materialIn, blockName, clazz, -1);
     }
+
     public BlockUniform(Material materialIn, String blockName, Class<? extends TileEntity> clazz, int gui) {
         super(materialIn);
         setUnlocalizedName("primalarcane.block." + blockName);
         setRegistryName(PrimalArcane.MODID, blockName);
         setCreativeTab(PrimalArcane.CREATIVE_TAB);
+        this.blockName = blockName;
         this.clazz = clazz;
         this.guiId = gui;
     }
@@ -84,4 +87,7 @@ public class BlockUniform extends BlockContainer {
     public boolean isFullCube(IBlockState state) {
         return false;
     }
+    public Material getMaterial() { return this.blockMaterial; }
+    public String getBlockName() { return this.blockName; }
+    public int getGuiId() { return this.guiId; }
 }

@@ -1,10 +1,12 @@
 package net.lrsoft.primalarcane.block;
 
 import net.lrsoft.primalarcane.PrimalArcane;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -13,16 +15,24 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockMachineTemplate extends BlockUniform {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
+	public static final PropertyBool ACTIVE = PropertyBool.create("active");
+	private boolean hasActiveType;
 	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz) {
 		this(materialIn, blockName, clazz, -1);
 	}
 	
 	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz, int gui) {
+		this(materialIn, blockName, clazz, gui, false);
+	}
+
+	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz, int gui, boolean hasActive) {
 		super(materialIn, blockName, clazz, gui);
+		this.hasActiveType = hasActive;
 	}
 
 	@Override
@@ -57,6 +67,21 @@ public class BlockMachineTemplate extends BlockUniform {
 			worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
 		}
 	}
+
+	public static void setState(boolean active, World worldIn, BlockPos pos) {
+		IBlockState iblockstate = worldIn.getBlockState(pos);
+		TileEntity tileentity = worldIn.getTileEntity(pos);
+
+		Block block = iblockstate.getBlock();
+
+		IBlockState state = block.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(ACTIVE, active);
+		worldIn.setBlockState(pos, state, 3);
+		if (tileentity != null) {
+			tileentity.validate();
+			worldIn.setTileEntity(pos, tileentity);
+		}
+	}
+
 
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
@@ -99,8 +124,8 @@ public class BlockMachineTemplate extends BlockUniform {
 		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
 	}
 
-	protected BlockStateContainer createBlockState()
-	{
+	@Override
+	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[] {FACING});
 	}
 }
