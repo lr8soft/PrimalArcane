@@ -4,7 +4,8 @@ import net.minecraft.item.ItemStack;
 
 public class TileEntityRuneBench extends TileEntityWithContainer{
     public TileEntityRuneBench() {
-        super(9);
+        // 8个原料 1个核心原料 1个输出
+        super(10);
     }
 
     @Override

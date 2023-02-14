@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 64],
 	"textures": {
-		"0": "primalarcane:blocks/mana_furnace/mana_furnace_tex",
-		"particle": "primalarcane:blocks/mana_furnace/mana_furnace_tex"
+		"0": "primalarcane:blocks/mana_furnace/mana_furnace_tex_active",
+		"particle": "primalarcane:blocks/mana_furnace/mana_furnace_tex_active"
 	},
 	"elements": [
 		{
