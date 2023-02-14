@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 public class BlockMachineTemplate extends BlockUniform {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool ACTIVE = PropertyBool.create("active");
-	private boolean hasActiveType;
+	private BlockMachineTemplate activeClone = null;
 	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz) {
 		this(materialIn, blockName, clazz, -1);
 	}
@@ -32,7 +32,10 @@ public class BlockMachineTemplate extends BlockUniform {
 
 	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz, int gui, boolean hasActive) {
 		super(materialIn, blockName, clazz, gui);
-		this.hasActiveType = hasActive;
+		if(hasActive) {
+			activeClone = new BlockMachineTemplate(materialIn, blockName + "_active", clazz, gui);
+			activeClone.setNeedItemBlock(false);
+		}
 	}
 
 	@Override
@@ -122,6 +125,10 @@ public class BlockMachineTemplate extends BlockUniform {
 	 */
 	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
 		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
+	}
+
+	public BlockMachineTemplate getActiveClone() {
+		return this.activeClone;
 	}
 
 	@Override

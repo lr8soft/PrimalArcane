@@ -53,6 +53,14 @@ public class BlockManager {
 			registry.register(block);
 			if(block.hasTileEntity()) {
 				GameRegistry.registerTileEntity(block.getTileEntityClazz(), block.getRegistryName());
+				if(block instanceof BlockMachineTemplate) {
+					// 注册有active状态的方块
+					BlockMachineTemplate activeClone = (BlockMachineTemplate)((BlockMachineTemplate) block).getActiveClone();
+					if(activeClone != null) {
+						registry.register(activeClone);
+						activeList.add(activeClone);
+					}
+				}
 			}
 		}
 		// 添加激活方块到列表去
