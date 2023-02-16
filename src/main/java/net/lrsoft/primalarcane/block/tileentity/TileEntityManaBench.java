@@ -2,8 +2,8 @@ package net.lrsoft.primalarcane.block.tileentity;
 
 import net.minecraft.item.ItemStack;
 
-public class TileEntityRuneBench extends TileEntityWithContainer{
-    public TileEntityRuneBench() {
+public class TileEntityManaBench extends TileEntityMachine{
+    public TileEntityManaBench() {
         // 6个原料 1个输出
         super(7);
     }
@@ -17,8 +17,18 @@ public class TileEntityRuneBench extends TileEntityWithContainer{
     }
 
     @Override
-    public String getName() { return "rune_bench"; }
+    public String getName() { return "mana_bench"; }
 
     @Override
     public boolean hasCustomName() { return false; }
+
+    @Override
+    public int getCurrentProgress() {
+        return 0;
+    }
+
+    @Override
+    public int getMaxProgress() {
+        return 100;
+    }
 }

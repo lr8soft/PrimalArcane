@@ -8,7 +8,7 @@ import net.lrsoft.primalarcane.block.BlockLighter;
 import net.lrsoft.primalarcane.block.BlockMachineTemplate;
 import net.lrsoft.primalarcane.block.BlockUniform;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityManaFurnace;
-import net.lrsoft.primalarcane.block.tileentity.TileEntityRuneBench;
+import net.lrsoft.primalarcane.block.tileentity.TileEntityManaBench;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityWandWorkBench;
 import net.lrsoft.primalarcane.gui.RenderGuiHandler;
 import net.minecraft.block.Block;
@@ -26,7 +26,7 @@ public class BlockManager {
 	public static List<BlockUniform> modBlockList = new ArrayList<>();
 	public static BlockUniform wandWorkBench;
 	public static BlockUniform manaFurnace, manaFurnaceActive;
-	public static BlockUniform runeBench;
+	public static BlockUniform manaBench;
 	public static BlockUniform lighterBlock;
 	
 	static {
@@ -38,8 +38,8 @@ public class BlockManager {
 		modBlockList.add(manaFurnace);
 		modBlockList.add(manaFurnaceActive);
 
-		runeBench = new BlockMachineTemplate(Material.IRON, "rune_bench", TileEntityRuneBench.class, RenderGuiHandler.RUNE_BENCH_ID);
-		modBlockList.add(runeBench);
+		manaBench = new BlockMachineTemplate(Material.IRON, "mana_bench", TileEntityManaBench.class, RenderGuiHandler.MANA_BENCH_ID);
+		modBlockList.add(manaBench);
 
 		lighterBlock = new BlockLighter();
 		modBlockList.add(lighterBlock);

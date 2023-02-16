@@ -3,7 +3,7 @@ itemGroup.primalarcaneTabs=[PAE]根源奥术
 
 tile.primalarcane.block.wand_workbench.name=法杖装配台
 tile.primalarcane.block.mana_furnace.name=魔力熔炉
-tile.primalarcane.block.rune_bench.name=符文合成台
+tile.primalarcane.block.mana_bench.name=魔力合成台
 
 item.primalarcane.wand.normal_wand.name=法杖
 
@@ -18,4 +18,4 @@ primalarcane.text.none=无
 primalarcane.text.submit=✔
 primalarcane.text.wand_workbench=法杖工作台
 primalarcane.text.mana_furnace=魔力熔炉
-primalarcane.text.rune_bench=符文合成台
+primalarcane.text.mana_bench=魔力合成台

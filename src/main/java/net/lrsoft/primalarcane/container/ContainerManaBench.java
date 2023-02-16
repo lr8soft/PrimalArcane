@@ -1,15 +1,15 @@
 package net.lrsoft.primalarcane.container;
 
-import net.lrsoft.primalarcane.block.tileentity.TileEntityRuneBench;
+import net.lrsoft.primalarcane.block.tileentity.TileEntityManaBench;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
-public class ContainerRuneBench extends Container {
-    private TileEntityRuneBench tileEntity;
+public class ContainerManaBench extends Container {
+    private TileEntityManaBench tileEntity;
 
-    public ContainerRuneBench(InventoryPlayer inventory, TileEntityRuneBench te) {
+    public ContainerManaBench(InventoryPlayer inventory, TileEntityManaBench te) {
         tileEntity = te;
 
         int slotSize = 21;

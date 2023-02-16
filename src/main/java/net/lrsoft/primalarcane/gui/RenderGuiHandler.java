@@ -2,10 +2,10 @@ package net.lrsoft.primalarcane.gui;
 
 import net.lrsoft.primalarcane.PrimalArcane;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityManaFurnace;
-import net.lrsoft.primalarcane.block.tileentity.TileEntityRuneBench;
+import net.lrsoft.primalarcane.block.tileentity.TileEntityManaBench;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityWandWorkBench;
 import net.lrsoft.primalarcane.container.ContainerManaFurnace;
-import net.lrsoft.primalarcane.container.ContainerRuneBench;
+import net.lrsoft.primalarcane.container.ContainerManaBench;
 import net.lrsoft.primalarcane.container.ContainerWandWorkbench;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -20,11 +20,10 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 public class RenderGuiHandler implements IGuiHandler{
 	public static final int WAND_WORKBENCH_ID = 0;
 	public static final int MANA_FUNRACE_ID = 1;
-	public static final int RUNE_BENCH_ID = 2;
+	public static final int MANA_BENCH_ID = 2;
 	
     @SubscribeEvent
-    public static void onRenderGui(net.minecraftforge.client.event.RenderGameOverlayEvent.Post event)
-    {
+    public static void onRenderGui(net.minecraftforge.client.event.RenderGameOverlayEvent.Post event) {
     	if (event.getType() != net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType.EXPERIENCE) return;
     	new GuiArcaneEnvironment(net.minecraft.client.Minecraft.getMinecraft());
     }
@@ -46,9 +45,9 @@ public class RenderGuiHandler implements IGuiHandler{
 				}
 				break;
 			}
-			case RUNE_BENCH_ID: {
-				if (te instanceof TileEntityRuneBench) {
-					return new ContainerRuneBench(player.inventory, (TileEntityRuneBench) te);
+			case MANA_BENCH_ID: {
+				if (te instanceof TileEntityManaBench) {
+					return new ContainerManaBench(player.inventory, (TileEntityManaBench) te);
 				}
 				break;
 			}
@@ -72,9 +71,9 @@ public class RenderGuiHandler implements IGuiHandler{
 				}
 				break;
 			}
-			case RUNE_BENCH_ID: {
-				if(te instanceof TileEntityRuneBench) {
-					return new GuiRuneBench(player.inventory, (TileEntityRuneBench) te);
+			case MANA_BENCH_ID: {
+				if(te instanceof TileEntityManaBench) {
+					return new GuiManaBench(player.inventory, (TileEntityManaBench) te);
 				}
 				break;
 			}
