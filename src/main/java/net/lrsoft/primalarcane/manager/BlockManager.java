@@ -8,6 +8,7 @@ import net.lrsoft.primalarcane.block.BlockLighter;
 import net.lrsoft.primalarcane.block.BlockMachineTemplate;
 import net.lrsoft.primalarcane.block.BlockUniform;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityManaFurnace;
+import net.lrsoft.primalarcane.block.tileentity.TileEntityRuneBench;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityWandWorkBench;
 import net.lrsoft.primalarcane.gui.RenderGuiHandler;
 import net.minecraft.block.Block;
@@ -24,7 +25,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 public class BlockManager {
 	public static List<BlockUniform> modBlockList = new ArrayList<>();
 	public static BlockUniform wandWorkBench;
-	public static BlockUniform manaFurnace;
+	public static BlockUniform manaFurnace, manaFurnaceActive;
+	public static BlockUniform runeBench;
 	public static BlockUniform lighterBlock;
 	
 	static {
@@ -32,7 +34,12 @@ public class BlockManager {
 		modBlockList.add(wandWorkBench);
 
 		manaFurnace = new BlockMachineTemplate(Material.IRON, "mana_furnace", TileEntityManaFurnace.class, RenderGuiHandler.MANA_FUNRACE_ID);
+		manaFurnaceActive = new BlockMachineTemplate(Material.IRON, "mana_furnace_active", null, RenderGuiHandler.MANA_FUNRACE_ID, true);
 		modBlockList.add(manaFurnace);
+		modBlockList.add(manaFurnaceActive);
+
+		runeBench = new BlockMachineTemplate(Material.IRON, "rune_bench", TileEntityRuneBench.class, RenderGuiHandler.RUNE_BENCH_ID);
+		modBlockList.add(runeBench);
 
 		lighterBlock = new BlockLighter();
 		modBlockList.add(lighterBlock);

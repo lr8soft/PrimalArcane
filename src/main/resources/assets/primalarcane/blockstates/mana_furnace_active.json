@@ -1,0 +1,18 @@
+{
+  "variants": {
+    "normal": { "model": "primalarcane:mana_furnace_active" },
+    "facing=south": { "model": "primalarcane:mana_furnace_active" },
+    "facing=north": {
+      "model": "primalarcane:mana_furnace_active",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "primalarcane:mana_furnace_active",
+      "y": 90
+    },
+    "facing=east": {
+      "model": "primalarcane:mana_furnace_active",
+      "y": 270
+    }
+  }
+}

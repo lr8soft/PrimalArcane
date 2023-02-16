@@ -40,7 +40,7 @@ import net.minecraftforge.fml.relauncher.Side;
 @Mod.EventBusSubscriber(value = Side.CLIENT, modid = PrimalArcane.MODID)
 public class ModelManager {
 	@SubscribeEvent
-	public static void onBlockModelInit(ModelRegistryEvent event) {
+	public static void onItemBlockModelInit(ModelRegistryEvent event) {
 		for (BlockUniform block : BlockManager.modBlockList) {
 			if(block.getNeedItemBlock()) {
 				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0,
