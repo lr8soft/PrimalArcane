@@ -28,12 +28,6 @@ public class GuiManaFurnace  extends GuiContainer {
         // 渲染ui标题
         String info = I18n.format("primalarcane.text.mana_furnace");
         this.fontRenderer.drawString(info, 110 - fontRenderer.getStringWidth(info), 6, Integer.parseInt("000000", 16));
-
-        /*
-        String progress = I18n.format("primalarcane.text.progress");
-        progress += " " + tileEntity.getCookTime() + "/" + tileEntity.getTotalCookTime();
-        this.fontRenderer.drawString(progress, 70 - fontRenderer.getStringWidth(info), 66, Integer.parseInt("000000", 16));
-        */
     }
 
     @Override

@@ -12,8 +12,20 @@ public class ContainerRuneBench extends Container {
     public ContainerRuneBench(InventoryPlayer inventory, TileEntityRuneBench te) {
         tileEntity = te;
 
-        //addSlotToContainer(new SlotWithFilter(te, 0, 54, 41));
-        //addSlotToContainer(new SlotWithFilter(te, 1, 113, 41));
+        int slotSize = 21;
+
+        int startX = 74, startY = 30;
+        // 输出槽
+        addSlotToContainer(new SlotWithFilter(te, 0, 134, 41));
+        // 第一行材料
+        addSlotToContainer(new SlotWithFilter(te, 3, startX, startY));
+        addSlotToContainer(new SlotWithFilter(te, 2, startX - slotSize, startY));
+        addSlotToContainer(new SlotWithFilter(te, 1, startX - slotSize - slotSize, startY));
+        // 第二行材料
+        int offsetY = 1;
+        addSlotToContainer(new SlotWithFilter(te, 6, startX, startY + slotSize + offsetY));
+        addSlotToContainer(new SlotWithFilter(te, 5, startX - slotSize, startY + slotSize + offsetY));
+        addSlotToContainer(new SlotWithFilter(te, 4, startX - slotSize - slotSize, startY + slotSize + offsetY));
 
         // 背包
         for (int row = 0; row < 3; ++row) {

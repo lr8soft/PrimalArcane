@@ -5,6 +5,7 @@ import net.lrsoft.primalarcane.block.tileentity.TileEntityManaFurnace;
 import net.lrsoft.primalarcane.block.tileentity.TileEntityRuneBench;
 import net.lrsoft.primalarcane.container.ContainerRuneBench;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -18,6 +19,14 @@ public class GuiRuneBench extends GuiContainer {
         super(new ContainerRuneBench(inventory, te));
         tileEntity = te;
         playerInventory = inventory;
+    }
+
+    @Override
+    protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+        // 渲染ui标题
+        String info = I18n.format("primalarcane.text.rune_bench");
+        this.fontRenderer.drawString(info, 110 - fontRenderer.getStringWidth(info), 6, Integer.parseInt("000000", 16));
     }
 
     @Override

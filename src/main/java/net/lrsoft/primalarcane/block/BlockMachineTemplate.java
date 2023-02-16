@@ -21,7 +21,6 @@ import net.minecraft.world.World;
 public class BlockMachineTemplate extends BlockUniform {
 	public static final PropertyDirection FACING = BlockHorizontal.FACING;
 	public static final PropertyBool ACTIVE = PropertyBool.create("active");
-	private BlockMachineTemplate activeClone = null;
 	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz) {
 		this(materialIn, blockName, clazz, -1);
 	}
@@ -30,12 +29,8 @@ public class BlockMachineTemplate extends BlockUniform {
 		this(materialIn, blockName, clazz, gui, false);
 	}
 
-	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz, int gui, boolean hasActive) {
-		super(materialIn, blockName, clazz, gui);
-		if(hasActive) {
-			activeClone = new BlockMachineTemplate(materialIn, blockName + "_active", clazz, gui);
-			activeClone.setNeedItemBlock(false);
-		}
+	public BlockMachineTemplate(Material materialIn, String blockName, Class<? extends TileEntity> clazz, int gui, boolean isActive) {
+		super(materialIn, blockName, clazz, gui, isActive);
 	}
 
 	@Override
@@ -71,14 +66,14 @@ public class BlockMachineTemplate extends BlockUniform {
 		}
 	}
 
-	public static void setState(boolean active, World worldIn, BlockPos pos) {
+	public static void setState(IBlockState state, World worldIn, BlockPos pos) {
 		IBlockState iblockstate = worldIn.getBlockState(pos);
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 
 		Block block = iblockstate.getBlock();
 
-		IBlockState state = block.getDefaultState().withProperty(FACING, iblockstate.getValue(FACING)).withProperty(ACTIVE, active);
-		worldIn.setBlockState(pos, state, 3);
+		IBlockState newState = state.withProperty(FACING, iblockstate.getValue(FACING));
+		worldIn.setBlockState(pos, newState, 3);
 		if (tileentity != null) {
 			tileentity.validate();
 			worldIn.setTileEntity(pos, tileentity);
@@ -125,10 +120,6 @@ public class BlockMachineTemplate extends BlockUniform {
 	 */
 	public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
 		return state.withRotation(mirrorIn.toRotation((EnumFacing)state.getValue(FACING)));
-	}
-
-	public BlockMachineTemplate getActiveClone() {
-		return this.activeClone;
 	}
 
 	@Override
