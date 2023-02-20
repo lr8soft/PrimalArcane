@@ -1,9 +1,10 @@
 package net.lrsoft.primalarcane.block.tileentity;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ITickable;
 
-public abstract class TileEntityMachine extends TileEntityWithContainer{
-    private boolean canWork = true;
+public abstract class TileEntityMachine extends TileEntityWithContainer implements ITickable {
+    private boolean canWork = false;
     public TileEntityMachine(int containerSize) {
         super(containerSize);
     }

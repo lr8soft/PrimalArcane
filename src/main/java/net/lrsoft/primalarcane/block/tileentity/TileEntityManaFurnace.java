@@ -12,11 +12,10 @@ import net.minecraft.world.chunk.Chunk;
 
 import javax.annotation.Nullable;
 
-public class TileEntityManaFurnace extends TileEntityWithContainer implements ITickable {
+public class TileEntityManaFurnace extends TileEntityMachine{
     protected final float consumeMana = 2.0f;
     private int cookTime = 0;
     private int totalCookTime = 50;
-    private boolean canWork = false;
 
     public TileEntityManaFurnace() {
         super(2);
@@ -27,6 +26,7 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
         if(this.world.isRemote)
             return;
 
+        boolean lastCanWork = getCanWork();
         boolean needUpdate = false;
         do{
             ItemStack sourceSlot = getStackInSlot(0);
@@ -34,12 +34,12 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
 
             Chunk chunk = this.world.getChunkFromBlockCoords(this.getPos());
             // 是否有足够魔力工作
-            boolean newCanWork = ManaHelper.canConsumeMana(chunk, consumeMana);
-            if(newCanWork != canWork) {
+            boolean nowCanWork = ManaHelper.canConsumeMana(chunk, consumeMana);
+            if(nowCanWork != lastCanWork) {
                 needUpdate = true;
             }
-            canWork = newCanWork;
-            if(!canWork) break;
+            setCanWork(nowCanWork);
+            if(!nowCanWork) break;
 
             // 检测输入是否为空，输出满了没有
             if(sourceSlot.isEmpty()) break;
@@ -111,25 +111,17 @@ public class TileEntityManaFurnace extends TileEntityWithContainer implements IT
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
         this.cookTime = compound.getInteger("cookTime");
-        this.canWork = compound.getBoolean("canWork");
     }
 
     @Override
     public NBTTagCompound writeToNBT(NBTTagCompound compound) {
         compound.setInteger("cookTime", this.cookTime);
-        compound.setBoolean("canWork", this.canWork);
         return super.writeToNBT(compound);
     }
 
-    public boolean getCanWork() {
-        return this.canWork;
-    }
+    @Override
+    public int getCurrentProgress() { return this.cookTime; }
 
-    public int getCookTime() {
-        return this.cookTime;
-    }
-
-    public int getTotalCookTime() {
-        return this.totalCookTime;
-    }
+    @Override
+    public int getMaxProgress() { return this.totalCookTime; }
 }

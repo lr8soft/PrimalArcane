@@ -83,6 +83,6 @@ public class GuiManaFurnace  extends GuiContainer {
     }
 
     private int getCookingProgressScale(int pixels) {
-        return tileEntity.getCookTime() * pixels / tileEntity.getTotalCookTime();
+        return tileEntity.getCurrentProgress() * pixels / tileEntity.getMaxProgress();
     }
 }

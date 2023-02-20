@@ -1,11 +1,17 @@
 package net.lrsoft.primalarcane.block.tileentity;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ITickable;
 
 public class TileEntityManaBench extends TileEntityMachine{
     public TileEntityManaBench() {
         // 6个原料 1个输出
         super(7);
+    }
+    
+    @Override
+    public void update() {
+
     }
 
     @Override
@@ -31,4 +37,5 @@ public class TileEntityManaBench extends TileEntityMachine{
     public int getMaxProgress() {
         return 100;
     }
+
 }
